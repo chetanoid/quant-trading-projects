@@ -455,4 +455,69 @@ One-day 95% VaR (assuming normal returns): 1.16%
 Plot saved to 'garch_volatility_model.png'.
 ```
 
+## 12 Factor Model Regression (`factor_model_regression.py`)
+
+Factor models are widely used to explain the cross‑section and time‑series of
+asset returns.  The classic Fama–French three‑factor model decomposes an
+asset’s excess return into exposures to the market, size (SMB) and value
+(HML) factors.  This project demonstrates how to estimate these
+exposures via a regression of an individual stock’s daily returns on
+factor returns.
+
+Key features:
+
+* **Flexible data acquisition:** Attempts to download the Fama–French
+  factor data via `pandas_datareader` and the asset’s price history via
+  `yfinance`.  If either download fails, the script generates
+  synthetic factor returns and/or synthetic asset returns so that the
+  regression can still be demonstrated offline.
+* **OLS regression:** Aligns dates between the asset and factor returns,
+  adds a constant term, and fits an ordinary least squares (OLS)
+  regression using `statsmodels`.  The full regression summary is
+  printed to the console, including parameter estimates and
+  diagnostic statistics.
+* **Visualisation:** Saves a bar chart of the estimated factor
+  exposures (betas) to `factor_exposures.png`.  The bar plot
+  visually conveys which factors drive the asset’s returns.
+
+### Running
+
+```bash
+python3 factor_model_regression.py --ticker AAPL --start 2019-01-01 --end 2024-01-01
+```
+
+Example output:
+
+```
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.002
+Model:                            OLS   Adj. R-squared:                 -0.002
+Method:                 Least Squares   F-statistic:                    0.4178
+Date:                Thu, 05 Mar 2026   Prob (F-statistic):              0.740
+Time:                        15:58:40   Log-Likelihood:                 2497.8
+No. Observations:                 784   AIC:                            -4988.
+Df Residuals:                     780   BIC:                            -4969.
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+===============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0002      0.000     -0.485      0.628      -0.001       0.001
+Mkt            0.0167      0.040      0.419      0.675      -0.062       0.095
+SMB           -0.0665      0.091     -0.735      0.463      -0.244       0.111
+HML           -0.0518      0.070     -0.738      0.461      -0.190       0.086
+==============================================================================
+Omnibus:                        0.477   Durbin-Watson:                   2.034
+Prob(Omnibus):                  0.788   Jarque-Bera (JB):                0.573
+Skew:                          -0.033   Prob(JB):                        0.751
+Kurtosis:                       2.885   Cond. No.                         253.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Factor exposures plot saved to 'factor_exposures.png'.
+```
+
+
 ```
