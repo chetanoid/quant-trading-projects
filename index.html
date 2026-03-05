@@ -1,32 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Chetan Sharma: Quantitative Finance Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chetan Sharma - Quantitative Finance Portfolio</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-    h1 { color: #333; }
-    h2 { color: #555; margin-top: 30px; }
-    ul { list-style-type: disc; margin-left: 20px; }
+  body { font-family: Arial, sans-serif; }
+  .hero { padding: 6rem 0; background-color: #f8f9fa; }
+  .hero h1 { font-weight: 700; font-size: 2.5rem; }
+  .hero p { font-size: 1.2rem; }
+  .section-title { margin-top: 4rem; margin-bottom: 2rem; font-weight: 600; }
+  footer { background-color: #f8f9fa; padding: 2rem 0; margin-top: 4rem; }
   </style>
 </head>
 <body>
-  <h1>Chetan Sharma: Quantitative Finance Portfolio</h1>
-  <p>This site presents a collection of advanced quantitative finance projects built to explore market microstructure, portfolio optimisation, derivatives pricing, risk management, and machine learning. Each project is fully documented with code, results and visualisations.</p>
-  
-  <h2>Interactive Dashboard</h2>
-  <p>Explore aggregated results and metrics in the interactive dashboard, including cumulative returns, efficient frontiers, a correlation heatmap and a risk metrics table: <a href="dashboard.html">Open the Dashboard</a>.</p>
-  
-  <h2>Project Highlights</h2>
-  <ul>
-    <li><strong>Market microstructure & execution:</strong> Limit order book simulation, high-frequency C++ engine, Avellaneda–Stoikov quoting, Almgren–Chriss optimal execution, Kalman filter pairs trading.</li>
-    <li><strong>Portfolio construction & risk:</strong> Mean–variance and risk parity optimisation, factor model regression, GARCH volatility forecasting, VaR/CVaR simulations.</li>
-    <li><strong>Derivatives & stochastic volatility:</strong> Black–Scholes and Greeks calculators, Heston and rough Bergomi models, Monte Carlo option pricing, implied volatility surface.</li>
-    <li><strong>Machine learning & RL:</strong> Sentiment analysis of financial news, reinforcement learning trading agent, backtesting engine.</li>
-  </ul>
-  
-  <p>For full descriptions and instructions, see the <a href="README_real_projects.md">project portfolio README</a> in this repository.</p>
-  
-  <p>© 2026 Chetan Sharma. Licensed under the MIT License.</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Chetan Sharma</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://github.com/chetanoid/quant-trading-projects" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="hero text-center">
+  <div class="container">
+    <h1>Quantitative Finance Portfolio</h1>
+    <p class="lead">A curated collection of advanced trading algorithms, stochastic models, and risk management tools.</p>
+    <a href="dashboard.html" class="btn btn-primary btn-lg">Explore the Dashboard</a>
+  </div>
+</section>
+
+<section id="about" class="container">
+  <h2 class="section-title">About Me</h2>
+  <p>
+    I'm a University of York graduate in Politics & International Relations with a strong focus on quantitative methods and R/Python programming.  Outside academia, I'm an International Master in chess and a self-directed trader. This portfolio demonstrates my ability to build sophisticated quantitative models and trading systems—from market microstructure simulations to stochastic volatility modelling, portfolio optimisation, reinforcement learning and more. 
+  </p>
+</section>
+
+<section id="projects" class="container">
+  <h2 class="section-title">Project Highlights</h2>
+  <div class="row gy-4">
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Market Microstructure & Execution</h5>
+          <p class="card-text">Limit-order book simulators, Avellaneda–Stoikov and Almgren–Chriss models, high-frequency C++ matching engine, Kalman & cointegration pairs trading.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Stochastic Models & Derivatives</h5>
+          <p class="card-text">Black–Scholes, Monte Carlo pricing, Heston & rough Bergomi volatility, Greeks calculator, implied volatility surfaces, GARCH & stochastic volatility forecasting.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Portfolio & Risk Management</h5>
+          <p class="card-text">Mean-variance and risk parity optimisation, factor models, VaR/CVaR simulations, efficient frontiers, GARCH and risk metrics.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Machine Learning & RL</h5>
+          <p class="card-text">Sentiment analysis of financial news, factor regression, reinforcement learning trading agent, backtesting engine.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-4">
+    <a href="README_real_projects.md" class="btn btn-outline-secondary">Full Project Catalogue</a>
+  </div>
+</section>
+
+<footer class="text-center">
+  <div class="container">
+    <p class="mb-0">&copy; 2026 Chetan Sharma | Built with Bootstrap</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
