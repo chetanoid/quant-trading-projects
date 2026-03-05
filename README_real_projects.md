@@ -878,12 +878,19 @@ projects【386058823430776†L121-L147】【675817645300989†L119-L135】.
 * Computes the correlation matrix of the synthetic asset returns and
   displays it as a colour‑coded heatmap.  This allows recruiters to see
   cross‑asset relationships at a glance.
-* Builds a Plotly dashboard with **three** interactive panels: a
-  cumulative return chart, an efficient frontier scatter plot and an
-  asset correlation heatmap.  Colour coding is used to indicate Sharpe
-  ratios in the scatter plot and correlation strength in the heatmap.
-  All plots are embedded in a single HTML file so that they load
-  seamlessly without running Python.
+* Computes key performance and risk metrics for each strategy
+  (annualised return, annualised volatility, Sharpe ratio and
+  maximum drawdown) and presents them in a tabular summary.  This
+  allows recruiters to quickly compare the risk‑adjusted performance
+  of buy‑and‑hold, momentum and mean reversion strategies without
+  scrolling through code or manual calculations.
+* Builds a Plotly dashboard with **four** interactive panels: a
+  cumulative return chart, an efficient frontier scatter plot, an
+  asset correlation heatmap, and a **strategy performance summary
+  table**.  Colour coding is used to indicate Sharpe ratios in the
+  scatter plot and correlation strength in the heatmap.  All
+  plots and the table are embedded in a single HTML file so that
+  they load seamlessly without running Python.
 * Saves the interactive web page as `dashboard.html` in the repository
   root.  When opened in a browser, it displays dynamic tooltips and
   legends for exploration.
