@@ -875,10 +875,15 @@ projects【386058823430776†L121-L147】【675817645300989†L119-L135】.
   portfolios, along with their annualised returns, volatilities and
   Sharpe ratios.  Identifies and highlights the maximum‐Sharpe and
   minimum‐volatility portfolios.
-* Builds a Plotly dashboard with two interactive panels: a cumulative
-  return chart and an efficient frontier scatter plot with colour coding
-  by Sharpe ratio.  The plots are embedded in a single HTML file so
-  that they load seamlessly without running Python.
+* Computes the correlation matrix of the synthetic asset returns and
+  displays it as a colour‑coded heatmap.  This allows recruiters to see
+  cross‑asset relationships at a glance.
+* Builds a Plotly dashboard with **three** interactive panels: a
+  cumulative return chart, an efficient frontier scatter plot and an
+  asset correlation heatmap.  Colour coding is used to indicate Sharpe
+  ratios in the scatter plot and correlation strength in the heatmap.
+  All plots are embedded in a single HTML file so that they load
+  seamlessly without running Python.
 * Saves the interactive web page as `dashboard.html` in the repository
   root.  When opened in a browser, it displays dynamic tooltips and
   legends for exploration.
