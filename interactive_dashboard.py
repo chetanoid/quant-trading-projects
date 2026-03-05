@@ -169,12 +169,55 @@ def build_dashboard():
     returns_matrix = prices.pct_change().dropna()
     corr = returns_matrix.corr()
 
-    # Create a three‑row subplot: returns, efficient frontier, correlation heatmap
-    fig = make_subplots(rows=3, cols=1, subplot_titles=(
+    # Compute summary metrics for each strategy
+    # We calculate annualised return, annualised volatility, Sharpe ratio (risk‑free rate = 0)
+    # and maximum drawdown for buy‑and‑hold, momentum and mean reversion strategies.
+    metrics = {}
+    # Map internal column names to user friendly labels
+    strategy_map = {
+        'bh_returns': 'Buy & Hold',
+        'momentum_returns': 'Momentum',
+        'mean_reversion_returns': 'Mean Reversion'
+    }
+    # Compute metrics
+    for col, name in strategy_map.items():
+        series = strat_df[col]
+        mean_daily = series.mean()
+        vol_daily = series.std()
+        annual_return = float(mean_daily * 252)
+        annual_vol = float(vol_daily * np.sqrt(252))
+        sharpe_ratio = (annual_return / annual_vol) if annual_vol != 0 else 0.0
+        # Compute cumulative returns for drawdown calculation
+        cumulative = (1.0 + series).cumprod()
+        running_max = cumulative.cummax()
+        drawdown = (cumulative - running_max) / running_max
+        max_drawdown = float(drawdown.min())
+        metrics[name] = {
+            'Return': annual_return,
+            'Volatility': annual_vol,
+            'Sharpe': sharpe_ratio,
+            'Max Drawdown': max_drawdown
+        }
+
+    # Prepare data for table
+    table_header = ['Strategy', 'Ann. Return', 'Ann. Volatility', 'Sharpe', 'Max Drawdown']
+    # Strategy order for display
+    order = ['Buy & Hold', 'Momentum', 'Mean Reversion']
+    table_values = [
+        order,
+        [round(metrics[s]['Return'], 4) for s in order],
+        [round(metrics[s]['Volatility'], 4) for s in order],
+        [round(metrics[s]['Sharpe'], 4) for s in order],
+        [round(metrics[s]['Max Drawdown'], 4) for s in order]
+    ]
+
+    # Create a four‑row subplot: returns, efficient frontier, correlation heatmap, metrics table
+    fig = make_subplots(rows=4, cols=1, subplot_titles=(
         'Cumulative Returns of Strategies',
         'Efficient Frontier (Synthetic Data)',
-        'Asset Return Correlation Heatmap'
-    ), vertical_spacing=0.20)
+        'Asset Return Correlation Heatmap',
+        'Strategy Performance Summary'
+    ), vertical_spacing=0.20, specs=[[{}], [{}], [{}], [{'type': 'table'}]])
 
     # Plot cumulative returns
     fig.add_trace(go.Scatter(x=strat_df.index,
@@ -237,7 +280,15 @@ def build_dashboard():
     fig.update_xaxes(tickangle=45, row=3, col=1)
     fig.update_yaxes(autorange='reversed', row=3, col=1)
 
-    fig.update_layout(height=1200, width=1000,
+    # Add table for strategy performance metrics
+    fig.add_trace(
+        go.Table(
+            header=dict(values=table_header, fill_color='lightgrey', align='center'),
+            cells=dict(values=table_values, align='center')
+        ), row=4, col=1
+    )
+
+    fig.update_layout(height=1500, width=1000,
                       title_text='Interactive Quantitative Trading Dashboard',
                       showlegend=True)
     # Write the HTML file
