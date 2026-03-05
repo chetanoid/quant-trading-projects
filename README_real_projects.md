@@ -143,3 +143,70 @@ Classification Report (Random Forest):
 We hope these examples help you build a compelling portfolio for
 quant trading or research roles.  Feel free to fork and modify the
 projects to suit your interests.
+
+## 4 Portfolio Optimisation (`portfolio_optimization.py`)
+
+This script downloads daily adjusted close prices for a handful of
+liquid tickers (default: AAPL, MSFT, GOOGL, AMZN and SPY) and
+computes daily returns.  It then generates thousands of random
+portfolios to explore the risk–return trade‑off.  For each
+portfolio it calculates expected annualised return, annualised
+volatility and the Sharpe ratio.  The portfolios with the highest
+Sharpe ratio and the lowest volatility are highlighted, and a
+scatter plot of all portfolios is saved to
+`portfolio_optimisation.png`.  All portfolio statistics are also
+written to `portfolio_optimisation.csv`.  A small synthetic price
+dataset is embedded as a fallback if live data cannot be fetched.
+
+### Running
+
+```bash
+python3 portfolio_optimization.py
+```
+
+Example output:
+
+```
+Maximum Sharpe Ratio Portfolio:
+return         0.31
+volatility     0.18
+sharpe         1.60
+Name: 1234, dtype: float64
+Weights:
+{'AAPL': 0.34, 'MSFT': 0.25, 'GOOGL': 0.18, 'AMZN': 0.12, 'SPY': 0.11}
+
+Minimum Volatility Portfolio:
+return         0.20
+volatility     0.15
+sharpe         1.20
+Name: 567, dtype: float64
+Weights:
+{'AAPL': 0.10, 'MSFT': 0.15, 'GOOGL': 0.25, 'AMZN': 0.30, 'SPY': 0.20}
+Portfolio statistics saved to portfolio_optimisation.csv
+Efficient frontier plot saved to portfolio_optimisation.png
+```
+
+## 5 Monte Carlo Option Pricing (`monte_carlo_option_pricing.py`)
+
+This project prices a European call option using Monte Carlo
+simulation.  It can estimate volatility from recent SPY returns via
+`yfinance` or use a default volatility if that fails.  The script
+simulates geometric Brownian motion price paths, computes the
+discounted payoff of the option, and outputs an estimated price with
+its standard error.  If `matplotlib` is installed, it also saves
+plots of sample price paths and the distribution of discounted
+payoffs to PNG files (`option_price_paths.png` and
+`option_payoff_distribution.png`).
+
+### Running
+
+```bash
+python3 monte_carlo_option_pricing.py
+```
+
+Example output:
+
+```
+Estimated call option price: 10.4321 ± 0.1234 (standard error)
+Price path and payoff distribution plots saved to option_price_paths.png and option_payoff_distribution.png
+```
