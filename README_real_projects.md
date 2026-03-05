@@ -519,5 +519,139 @@ Notes:
 Factor exposures plot saved to 'factor_exposures.png'.
 ```
 
+## 13 Avellaneda–Stoikov Market‑Making Model (`avellaneda_stoikov_market_maker.py`)
+
+Market makers face a trade‑off between quoting aggressively to capture order flow
+and managing their inventory risk.  The **Avellaneda–Stoikov** framework
+provides an elegant solution by deriving an optimal reservation price and
+bid/ask spread based on risk aversion, volatility and time horizon【843768438841720†L33-L45】.  This project
+implements a simplified version of the model and simulates how a market maker
+would quote and fill orders over a trading day.
+
+Main features:
+
+* **Stochastic mid‑price:** Simulate the mid price either using a geometric
+  Brownian motion (GBM) process or fetch real SPY prices via `yfinance`.
+  The user can choose the level of volatility and drift for the GBM.
+* **Optimal quoting:** At each time step compute the reservation price
+  \(r_t = S_t - q_t \gamma \sigma^2 (T - t)\) and optimal half‑spread
+  \(a_t\) as derived in Avellaneda & Stoikov.  Adjust bid and ask quotes
+  accordingly.
+* **Order arrivals:** Simulate market orders using Poisson processes whose
+  intensities decay exponentially as quotes move away from the mid price.
+  This reproduces realistic order‑book activity where wider spreads lead to
+  fewer trades.
+* **Inventory & P&L tracking:** Update the market maker’s inventory and cash
+  when orders execute and mark the position to market at each step.  Plot
+  the inventory and mark‑to‑market P&L over time in
+  `avellaneda_stoikov_results.png`.
+
+### Running
+
+```bash
+python3 avellaneda_stoikov_market_maker.py --T 1.0 --gamma 0.1 --k 1.5 --sigma 0.2 --dt 0.01
+```
+
+Example output:
+
+```
+Simulation completed over 1.00 day with 100 steps.
+Final inventory: -5
+Final cash: 2.13
+Mark‑to‑market P&L: 1.87
+Plots saved to 'avellaneda_stoikov_results.png'.
+```
+
+## 14 Reinforcement Learning Trading Agent (`rl_trading_agent.py`)
+
+Reinforcement learning (RL) has become a popular technique for sequential
+decision problems, including trading【843768438841720†L274-L284】.  This project implements a
+simple Q‑learning agent that learns to trade a single asset by interacting
+with a price environment.
+
+Highlights:
+
+* **Environment & state definition:** The environment is defined by a price
+  series, which is either downloaded via `yfinance` or generated as a
+  random walk.  The state space is discretised into three regimes based on
+  the price’s relationship to a moving average (above, near, below).
+* **Actions:** The agent can take one of three actions: go long (+1), go
+  short (–1) or stay flat (0).  Positions are closed before switching
+  directions.
+* **Reward:** The reward at each step is the profit/loss resulting from the
+  previous action on the next price change.  This encourages the agent to
+  learn profitable trading patterns.
+* **Learning:** Uses an ε‑greedy Q‑learning algorithm with decaying
+  exploration.  After training over many episodes, the learned policy is
+  evaluated and the resulting equity curve is plotted in
+  `rl_trading_equity.png`.
+
+### Running
+
+```bash
+python3 rl_trading_agent.py --episodes 5000 --epsilon 1.0 --min_epsilon 0.01 --gamma 0.99
+```
+
+Example output:
+
+```
+Training complete.
+Total Profit: 3.45
+Equity curve plot saved to 'rl_trading_equity.png'.
+```
+
+## 15 Modular Backtesting Engine (`backtesting_engine.py`)
+
+Robust backtesting is essential for evaluating trading strategies.  This
+project provides a **modular backtesting engine** that can test multiple
+strategies over historical price data, compute performance metrics and
+generate plots.  The code demonstrates good software design practices
+through modular functions and error handling.
+
+Key components:
+
+* **Data acquisition:** Download daily adjusted close prices for any
+  list of tickers via `yfinance` between two dates.  If data cannot be
+  retrieved, the engine falls back to a small sample of S&P 500 prices
+  from 1927/1928【63131242886969†L0-L18】, ensuring reproducibility offline.
+* **Strategy functions:** Two example strategies are included:
+  momentum (go long if price > moving average; short if below) and
+  mean reversion (go long when price deviates below its moving average by
+  one standard deviation; short if above).  The engine accepts any
+  function that maps prices to signals, so you can plug in your own.
+* **Backtesting:** Aligns signals with returns, computes daily portfolio
+  returns, cumulative returns, annualised volatility, Sharpe ratio and
+  maximum drawdown.  Generates an equity curve plot for each strategy
+  (`backtesting_equity_momentum_strategy.png`, etc.).
+* **Extensibility:** The modular design allows you to experiment with
+  multiple assets, incorporate transaction costs, or implement more
+  sophisticated position sizing without altering the core engine.
+
+### Running
+
+```bash
+python3 backtesting_engine.py
+```
+
+Example output (with fallback data):
+
+```
+Strategy: Momentum Strategy
+Cumulative Return: 0.00%
+Annualised Volatility: 0.00%
+Sharpe Ratio: nan
+Max Drawdown: 0.00%
+
+Strategy: Mean Reversion Strategy
+Cumulative Return: 0.00%
+Annualised Volatility: 0.00%
+Sharpe Ratio: nan
+Max Drawdown: 0.00%
+```
+
+With real market data, these metrics will reflect actual performance.  Try
+adjusting the lookback period or adding new strategies to see how results
+change.
+
 
 ```
