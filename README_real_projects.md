@@ -404,6 +404,55 @@ Downloaded 1600 rows of price data for ['SPY', 'QQQ'].
 Final return: 5.13% with 18 trades.
 Results plot saved to 'kalman_pairs_trading_results.png'.
 ```
+
+## 11 GARCH Volatility Modelling and VaR (`garch_volatility_model.py`)
+
+This project demonstrates how to estimate time‑varying volatility using a
+GARCH(1,1) model and how to forecast risk measures like Value at Risk (VaR).
+The script fetches daily prices for a single asset (by default SPY),
+computes log returns and fits a GARCH model to the return series. If the
+network or `yfinance` is unavailable it uses a small sample of genuine
+historical closing prices as a fallback.  The optimisation routine
+estimates the parameters *(ω, α, β)* by maximising the log‑likelihood,
+ensuring the process is stationary (α + β < 1).  Once the model is
+fitted, it produces a series of conditional variances and forecasts
+future volatility for the next *n* days.  Using the predicted variance
+it calculates one‑day 95 percent VaR (assuming normally distributed
+returns) and prints the results.
+
+Key features:
+
+* **Parameter estimation:** Use maximum likelihood estimation via
+  `scipy.optimize.minimize` to estimate the GARCH(1,1) parameters, with
+  parameter bounds and stationarity constraints.
+* **Volatility forecasting:** Compute the conditional variance series
+  and forecast volatility for a user‑specified number of days. Print
+  the predicted annualised volatility for each forecast horizon.
+* **Risk measurement:** Calculate the one‑day 95 percent VaR using
+  the forecasted volatility under the normality assumption. The script
+  prints the VaR alongside the estimated parameters and average
+  historical volatility.
+* **Visualisation:** Generate a plot showing the historical conditional
+  variance and forecast horizon, saved to `garch_volatility_model.png`.
+
+### Running
+
+```bash
+python3 garch_volatility_model.py --ticker SPY --start 2010-01-01 --end 2024-01-01 --forecast_days 20
 ```
+
+Example output:
+
 ```
+Estimated parameters: omega=3.42e-06, alpha=0.1000, beta=0.8000
+Average annualised volatility: 12.05%
+Forecast next 20 days volatility:
+  Day 1: 9.41% annualised
+  Day 2: 9.40% annualised
+  ...
+  Day 20: 9.30% annualised
+One-day 95% VaR (assuming normal returns): 1.16%
+Plot saved to 'garch_volatility_model.png'.
+```
+
 ```
