@@ -769,3 +769,45 @@ Mean implementation shortfall: $-5,032,456.78, Std: $345,236.45
 ```
 Two PNG files illustrating the trading schedule and cost distribution are
 saved to disk.
+
+## 19. High‑Frequency Limit Order Book Engine (C++)
+
+**Purpose.**  Demonstrate low‑level systems programming and an understanding of
+order‑book mechanics by implementing a limit order book engine in C++.  This
+project counters the notion that AI will replace all coding by showing you
+can build a performant, concurrent trading component from scratch.  It
+mimics a high‑frequency matching engine with separate producer threads for
+bid/ask orders and a dedicated matching thread to process the book.
+
+**Features.**
+
+* Written in modern C++17 with no third‑party dependencies.  Uses custom
+  order structures, priority queues for the bid and ask books, and
+  multi‑threading with mutexes and condition variables.
+* Implements a matching loop that synchronizes order intake and
+  transaction execution, updating inventory and cash like a market maker.
+* Simulates concurrent order flows via separate producer threads that
+  generate random bid and ask orders.  The engine matches when the best
+  bid crosses the best ask.
+* Prints final inventory and cash to show P&L.  The design can be
+  extended to log time‑stamped trades, persist order books, or connect
+  real exchange feeds.
+
+**Run.**  This project is a C++ program.  To compile and run using
+`g++` (with C++17 support), execute:
+
+```bash
+g++ -std=c++17 -O2 high_frequency_limit_order_book.cpp -o hflob
+./hflob
+```
+
+Example output:
+
+```
+Final inventory: 3
+Final cash: -150.00
+```
+
+This output indicates the engine bought and sold orders concurrently,
+resulting in a small long position and negative cash (spent on buying).  The
+actual values vary depending on the random seed.
