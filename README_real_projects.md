@@ -21,10 +21,14 @@ falls back to a small series of genuine S&P 500 levels from the early
 twentieth century (sourced from the open *dow‑sp500‑100‑years*
 repository).  The market maker quotes bid/ask prices around each
 mid‑price, simulates random market order arrivals, matches orders and
-marks its inventory to market.  At the end of the simulation it
-prints the final P&L and inventory.  You can adjust the spread,
-lot size and inventory target by modifying the parameters passed to
-`simulate_market_with_real_data`.
+marks its inventory to market.  At the end of the simulation it prints
+the final P&L and inventory.  If `matplotlib` is installed, the script
+also generates two diagnostic plots: one showing the mark‑to‑market P&L
+trajectory and another showing how the market maker’s inventory evolves
+over time.  These images are saved to `market_maker_pnl.png` and
+`market_maker_inventory.png` in the current directory.  You can
+adjust the spread, lot size and inventory target by modifying the
+parameters passed to `simulate_market_with_real_data`.
 
 ### Running
 
@@ -55,6 +59,9 @@ S&P 500 prices embedded as a CSV string.  The backtester calculates
 daily strategy returns, computes cumulative return, annualised
 volatility and a Sharpe‑like ratio, prints a summary to the console
 and saves the time‑series of returns to `strategy_real_returns.csv`.
+When `matplotlib` is available, it also plots cumulative returns for
+the buy‑and‑hold, momentum and mean‑reversion strategies.  The chart
+is saved as `strategy_cumulative_returns.png`.
 
 ### Running
 
@@ -85,6 +92,10 @@ script performs the following steps:
 3. Split into training and test sets.
 4. Train a logistic regression classifier and a random forest classifier.
 5. Print accuracy and a full classification report for each model.
+6. If `matplotlib` is installed, generate confusion matrix heatmaps for
+   the logistic regression and random forest classifiers and save them
+   as `logistic_confusion_matrix.png` and
+   `random_forest_confusion_matrix.png`.
 
 You can adjust the `max_features` parameter of `TfidfVectorizer` or
 test other models (e.g. SVM, XGBoost) to experiment with

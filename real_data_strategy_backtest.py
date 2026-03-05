@@ -28,6 +28,14 @@ import pandas as pd
 import numpy as np
 from io import StringIO
 
+# Attempt to import matplotlib for plotting cumulative returns.  If not
+# available, the backtest will still run and output metrics and CSV.
+try:
+    import matplotlib.pyplot as plt  # type: ignore
+    _HAVE_MATPLOTLIB = True
+except Exception:
+    _HAVE_MATPLOTLIB = False
+
 
 # Embedded fallback CSV taken from the GitHub repository
 # fja05680/dow-sp500-100-years.  These values correspond to the
@@ -160,6 +168,27 @@ def main() -> None:
     # Save daily returns to CSV
     result.to_csv("strategy_real_returns.csv")
     print("Daily returns saved to strategy_real_returns.csv")
+
+    # Plot cumulative returns for each strategy if matplotlib is available
+    if _HAVE_MATPLOTLIB:
+        try:
+            # Compute cumulative returns (starting at zero) for each series
+            cum_returns = (result[["return", "momentum", "mean_reversion"]] + 1).cumprod() - 1
+            plt.figure()
+            for col in cum_returns.columns:
+                plt.plot(cum_returns.index, cum_returns[col], label=col)
+            plt.legend()
+            plt.title("Cumulative Returns of Strategies")
+            plt.xlabel("Date")
+            plt.ylabel("Cumulative Return")
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            plt.savefig("strategy_cumulative_returns.png")
+            plt.close()
+            print("Cumulative returns plot saved to strategy_cumulative_returns.png")
+        except Exception:
+            # Silently ignore plotting errors (e.g. no backend available)
+            pass
 
 
 if __name__ == "__main__":

@@ -37,6 +37,14 @@ import random
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
+# We try to import matplotlib for plotting.  If it is not
+# installed, the simulation will run without generating figures.
+try:
+    import matplotlib.pyplot as plt  # type: ignore
+    _HAVE_MATPLOTLIB = True
+except Exception:
+    _HAVE_MATPLOTLIB = False
+
 
 # Hard‑coded fallback price series taken from the first month of the S&P 500
 # dataset hosted at https://github.com/fja05680/dow-sp500-100-years (1927/1928).
@@ -223,7 +231,11 @@ def simulate_market_with_real_data(price_series: List[float], spread: float = 0.
     book = OrderBook()
     maker = MarketMaker(name="MarketMaker", book=book, spread=spread,
                         target_inventory=target_inventory)
+    # Record the mark‑to‑market P&L and inventory after each step.  These
+    # lists are later used to produce diagnostic plots if matplotlib is
+    # available.
     pl_history: List[float] = []
+    inventory_history: List[int] = []
 
     for mid_price in price_series:
         # Market maker quotes around the real mid price
@@ -247,13 +259,46 @@ def simulate_market_with_real_data(price_series: List[float], spread: float = 0.
 
         trades = book.match()
         maker.update_inventory(trades)
+        # Append the current mark‑to‑market value and inventory
         pl_history.append(maker.mark_to_market)
+        inventory_history.append(maker.inventory)
 
     # Final statistics
     final_pl = maker.mark_to_market
     print("Simulation complete using {} price points.".format(len(price_series)))
     print(f"Final mark‑to‑market P&L: {final_pl:.2f}")
     print(f"Final inventory: {maker.inventory}")
+
+    # Generate diagnostic plots if matplotlib is available.  These plots
+    # provide a quick visual assessment of how the market maker's P&L and
+    # inventory evolved over the simulation.  If matplotlib cannot be
+    # imported, silently skip plotting.
+    if _HAVE_MATPLOTLIB and pl_history:
+        try:
+            # Plot mark‑to‑market P&L trajectory
+            plt.figure()
+            plt.plot(range(len(pl_history)), pl_history)
+            plt.title("Mark‑to‑Market P&L")
+            plt.xlabel("Timestep")
+            plt.ylabel("P&L")
+            plt.tight_layout()
+            plt.savefig("market_maker_pnl.png")
+            plt.close()
+            print("P&L plot saved to market_maker_pnl.png")
+
+            # Plot inventory trajectory
+            plt.figure()
+            plt.plot(range(len(inventory_history)), inventory_history)
+            plt.title("Inventory Over Time")
+            plt.xlabel("Timestep")
+            plt.ylabel("Inventory")
+            plt.tight_layout()
+            plt.savefig("market_maker_inventory.png")
+            plt.close()
+            print("Inventory plot saved to market_maker_inventory.png")
+        except Exception:
+            # In case plotting fails mid‑way (e.g. no GUI backend), ignore
+            pass
 
 
 if __name__ == "__main__":

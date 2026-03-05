@@ -25,7 +25,15 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Attempt to import matplotlib for visualising confusion matrices.  If
+# not available, the script will run without generating figures.
+try:
+    import matplotlib.pyplot as plt  # type: ignore
+    _HAVE_MATPLOTLIB = True
+except Exception:
+    _HAVE_MATPLOTLIB = False
 
 
 def load_data(path: str = "all-data.csv") -> pd.DataFrame:
@@ -69,6 +77,27 @@ def train_models(df: pd.DataFrame) -> None:
     print("Classification Report (Logistic Regression):")
     print(classification_report(y_test, preds_lr, target_names=["negative", "neutral", "positive"]))
 
+    # Plot confusion matrix for Logistic Regression if matplotlib is available
+    if _HAVE_MATPLOTLIB:
+        try:
+            cm_lr = confusion_matrix(y_test, preds_lr, labels=[-1, 0, 1])
+            labels = ["negative", "neutral", "positive"]
+            plt.figure()
+            plt.imshow(cm_lr, interpolation="nearest")
+            plt.title("Logistic Regression Confusion Matrix")
+            plt.colorbar()
+            tick_marks = range(len(labels))
+            plt.xticks(tick_marks, labels, rotation=45)
+            plt.yticks(tick_marks, labels)
+            plt.ylabel("True Label")
+            plt.xlabel("Predicted Label")
+            plt.tight_layout()
+            plt.savefig("logistic_confusion_matrix.png")
+            plt.close()
+            print("Logistic regression confusion matrix saved to logistic_confusion_matrix.png")
+        except Exception:
+            pass
+
     # Random Forest
     rf = RandomForestClassifier(n_estimators=200, random_state=42)
     rf.fit(X_train, y_train)
@@ -77,6 +106,27 @@ def train_models(df: pd.DataFrame) -> None:
     print("Random Forest Accuracy: {:.2%}".format(acc_rf))
     print("Classification Report (Random Forest):")
     print(classification_report(y_test, preds_rf, target_names=["negative", "neutral", "positive"]))
+
+    # Plot confusion matrix for Random Forest if matplotlib is available
+    if _HAVE_MATPLOTLIB:
+        try:
+            cm_rf = confusion_matrix(y_test, preds_rf, labels=[-1, 0, 1])
+            labels = ["negative", "neutral", "positive"]
+            plt.figure()
+            plt.imshow(cm_rf, interpolation="nearest")
+            plt.title("Random Forest Confusion Matrix")
+            plt.colorbar()
+            tick_marks = range(len(labels))
+            plt.xticks(tick_marks, labels, rotation=45)
+            plt.yticks(tick_marks, labels)
+            plt.ylabel("True Label")
+            plt.xlabel("Predicted Label")
+            plt.tight_layout()
+            plt.savefig("random_forest_confusion_matrix.png")
+            plt.close()
+            print("Random forest confusion matrix saved to random_forest_confusion_matrix.png")
+        except Exception:
+            pass
 
 
 def main() -> None:
