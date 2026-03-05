@@ -854,3 +854,44 @@ The script also produces `rough_bergomi_price.png`, a figure showing the
 evolving asset price and variance.  You can adjust the Hurst parameter to
 explore roughness effects or increase the number of Monte Carlo paths to
 improve pricing accuracy.
+
+## 21. Interactive Quantitative Trading Dashboard
+
+**Purpose.**  Provide a high‑level, visually engaging summary of multiple
+quant projects and risk metrics in a single, interactive web page.  The
+dashboard demonstrates your ability to synthesise results across models
+and build intuitive visualisations.  Recruiters often lack time to run
+code locally; an interactive dashboard lets them explore P&L curves and
+efficient frontiers quickly, as recommended by articles on presenting data
+projects【386058823430776†L121-L147】【675817645300989†L119-L135】.
+
+**Features.**
+
+* Reads the `strategy_returns.csv` file produced by the backtesting
+  project and computes cumulative returns for buy‑and‑hold, momentum and
+  mean reversion strategies.
+* Generates synthetic prices for a basket of five assets, then performs
+  Monte Carlo portfolio optimisation to compute thousands of random
+  portfolios, along with their annualised returns, volatilities and
+  Sharpe ratios.  Identifies and highlights the maximum‐Sharpe and
+  minimum‐volatility portfolios.
+* Builds a Plotly dashboard with two interactive panels: a cumulative
+  return chart and an efficient frontier scatter plot with colour coding
+  by Sharpe ratio.  The plots are embedded in a single HTML file so
+  that they load seamlessly without running Python.
+* Saves the interactive web page as `dashboard.html` in the repository
+  root.  When opened in a browser, it displays dynamic tooltips and
+  legends for exploration.
+
+**Run.**
+
+```bash
+python3 interactive_dashboard.py
+```
+
+After execution, open `dashboard.html` in a web browser to explore the
+interactive plots.  The dashboard will still run if `strategy_returns.csv`
+is missing (all series default to zero) and uses synthetic prices to
+ensure reproducibility without internet access.  This project illustrates
+modern data‐visualisation skills and responds to recruiters’ desire to
+see results presented clearly and interactively【675817645300989†L119-L135】.
