@@ -811,3 +811,46 @@ Final cash: -150.00
 This output indicates the engine bought and sold orders concurrently,
 resulting in a small long position and negative cash (spent on buying).  The
 actual values vary depending on the random seed.
+
+## 20. Rough Bergomi Stochastic Volatility Model (`rough_bergomi_model.py`)
+
+**Purpose.**  Implement an advanced rough volatility model used in modern
+derivative pricing and risk management.  The rough Bergomi model captures
+the observed roughness of volatility by driving the variance process with
+a fractional Brownian motion.  Developing this project demonstrates
+understanding of fractional calculus, non‑Markovian dynamics and Monte
+Carlo methods—techniques beyond standard textbook models.  Articles on
+high‑impact quant projects highlight building and calibrating stochastic
+volatility models as a way to showcase deeper mathematical insight and
+algorithm design【843768438841720†L357-L373】.
+
+**Features.**
+
+* Implements the Hosking method to generate fractional Gaussian noise for
+  a given Hurst parameter `H`, enabling simulation of fractional Brownian
+  motion increments.
+* Constructs the variance process `V_t = xi * exp(X_t)` where `X_t`
+  integrates the fBm with volatility of volatility parameter `eta`.
+* Simulates correlated Brownian motions with correlation `rho` to drive
+  the underlying asset and variance process.
+* Provides a Monte Carlo function to price European call options under
+  rough Bergomi dynamics and prints an estimate with a standard error.
+* Saves a dual‑axis plot of the simulated price and variance paths to
+  `rough_bergomi_price.png`.
+
+**Run.**
+
+```bash
+python3 rough_bergomi_model.py
+```
+
+Example output:
+
+```
+MC price of call option: 8.7234 ± 0.1421
+```
+
+The script also produces `rough_bergomi_price.png`, a figure showing the
+evolving asset price and variance.  You can adjust the Hurst parameter to
+explore roughness effects or increase the number of Monte Carlo paths to
+improve pricing accuracy.
