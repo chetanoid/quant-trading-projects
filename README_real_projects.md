@@ -653,5 +653,55 @@ With real market data, these metrics will reflect actual performance.  Try
 adjusting the lookback period or adding new strategies to see how results
 change.
 
+## 16 Implied Volatility Surface (`implied_vol_surface.py`)
+
+Options traders often look at the implied volatility (IV) surface—a 3D map
+showing how implied volatility varies with strike price and time to maturity.
+Constructing and visualising this surface requires numerical root finding and
+knowledge of option pricing theory【843768438841720†L357-L373】.  This project builds a synthetic option
+chain and then inverts the Black–Scholes formula to compute the implied
+volatility at each point.
+
+The script works as follows:
+
+* **Synthetic option prices:** Define an underlying spot price (default 100),
+  risk‑free rate and a base volatility function that increases for deep
+  in‑the‑money/out‑of‑the‑money options and for longer maturities.  Generate
+  call prices on a grid of strikes (50 % to 150 % of spot) and maturities
+  (0.1 to 2.0 years).
+* **Implied volatility inversion:** For each price on the grid, solve for the
+  implied volatility that recovers the price using Brent’s method
+  (via ``scipy.optimize.brentq``) or a custom bisection method if ``scipy`` is
+  unavailable.  This mirrors the process traders use to infer volatility from
+  market option prices.
+* **Visualisation:** Plot the resulting implied volatility surface in 3D and
+  provide a heatmap projection for easier inspection.  Both plots are saved
+  to `implied_vol_surface.png` and `implied_vol_heatmap.png`.
+* **Extensibility:** Replace the synthetic price generation with real option
+  chain data (strike, maturity, market price) to build a volatility surface
+  from actual market observations.
+
+### Running
+
+```bash
+python3 implied_vol_surface.py
+```
+
+Example output:
+
+```
+Sample implied volatilities:
+K= 80, T=0.5: implied vol = 0.285
+K= 80, T=1.0: implied vol = 0.299
+K= 80, T=1.5: implied vol = 0.313
+K=100, T=0.5: implied vol = 0.200
+K=100, T=1.0: implied vol = 0.225
+K=100, T=1.5: implied vol = 0.250
+K=120, T=0.5: implied vol = 0.255
+K=120, T=1.0: implied vol = 0.269
+K=120, T=1.5: implied vol = 0.283
+Volatility surface plot saved to 'implied_vol_surface.png' and heatmap to 'implied_vol_heatmap.png'.
+```
+
 
 ```
