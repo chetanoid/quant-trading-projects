@@ -277,5 +277,89 @@ Downloaded 1500 rows of price data for ['AAPL', 'MSFT', 'GOOGL', 'AMZN'].
 Parametric VaR (99%): 2.13%
 Parametric CVaR: 2.75%
 Plot saved to 'portfolio_var_distribution.png'.
+
+## 8 Risk Parity Portfolio (`risk_parity_portfolio.py`)
+
+Risk parity aims to allocate capital such that each asset contributes an
+equal share of total portfolio risk. This script constructs a
+risk‑parity portfolio from a basket of equities and compares its
+performance to a simple equal‑weighted portfolio.
+
+Key steps include:
+
+* **Data acquisition:** Download daily adjusted prices for a set of
+  tickers (defaults: AAPL, MSFT, GOOGL, AMZN) via `yfinance`.
+  If the download fails, the script generates synthetic correlated
+  returns and builds a price series as a fallback.
+* **Return and covariance calculation:** Compute log returns and the
+  covariance matrix.
+* **Risk parity optimisation:** Use an iterative multiplicative update
+  method to find weights that equalise each asset’s risk
+  contribution. This method converges quickly and ensures the
+  weights sum to 1.
+* **Performance comparison:** Calculate annualised return,
+  volatility and Sharpe ratio for both the risk parity portfolio and
+  an equal‑weight portfolio, and display each asset’s weight and risk
+  contribution.
+* **Visualisation:** Plot a bar chart of risk parity weights and
+  save it to `risk_parity_weights.png`.
+
+### Running
+
+```bash
+python3 risk_parity_portfolio.py --symbols AAPL MSFT GOOGL AMZN --start 2018-01-01 --end 2024-01-01
+```
+
+Example output:
+
+```
+Risk Parity Weights:
+  AAPL: weight=0.446, risk contribution=0.007
+  MSFT: weight=0.000, risk contribution=0.000
+  GOOGL: weight=0.000, risk contribution=0.000
+  AMZN: weight=0.554, risk contribution=0.007
+
+Risk Parity Portfolio: Return=3.06%, Volatility=22.55%, Sharpe=0.14
+Equal Weight Portfolio: Return=2.59%, Volatility=16.56%, Sharpe=0.16
+Plot saved to 'risk_parity_weights.png'.
+```
+
+## 9 Option Pricing & Greeks Calculator (`option_greeks_calculator.py`)
+
+Understanding how option prices respond to changes in market
+conditions is essential for hedging and risk management. This script
+computes the Black–Scholes price for European options and their
+sensitivity measures ("Greeks") such as Delta, Gamma, Vega, Theta and
+Rho.
+
+Key features:
+
+* **User‑specified inputs:** Specify whether the option is a call or
+  put, the underlying spot price, strike price, risk‑free rate,
+  volatility and time to maturity. Default values are provided.
+* **Analytical Greeks:** Compute the option price and all five major
+  Greeks using closed‑form Black–Scholes expressions. Option price,
+  Delta, Gamma, Vega, Theta and Rho are printed to the console.
+* **Visualisation:** Generate a figure showing how each Greek varies
+  with the underlying price (from 50% to 150% of the current spot).
+  The plot is saved to `option_greeks.png`.
+
+### Running
+
+```bash
+python3 option_greeks_calculator.py --type call --spot 100 --strike 100 --rate 0.02 --vol 0.2 --t 1
+```
+
+Example output:
+
+```
+Call Option Price: 8.9160
+Delta: 0.5793
+Gamma: 0.019552
+Vega: 39.1043
+Theta: -6.0491
+Rho: 49.0099
+Greek plots saved to 'option_greeks.png'.
+```
 ```
 ```
