@@ -209,4 +209,73 @@ Example output:
 ```
 Estimated call option price: 10.4321 ± 0.1234 (standard error)
 Price path and payoff distribution plots saved to option_price_paths.png and option_payoff_distribution.png
+
+## 6 Cointegration Pairs Trading (`cointegration_pairs_trading.py`)
+
+This project implements a simple statistical arbitrage strategy based on the
+concept of cointegration. It does the following:
+
+* **Data acquisition:** Downloads daily adjusted close prices for two tickers (default: KO and PEP) via
+  `yfinance`. If the library is unavailable or data cannot be fetched,
+  it generates two correlated random walk series as a fallback.
+* **Cointegration test:** Uses the Engle–Granger two‑step test to check whether the two price series
+  are cointegrated and estimates the hedge ratio by regressing one series on
+  the other.
+* **Spread construction:** Constructs the spread and computes its z‑score. When the z‑score deviates
+  beyond a specified threshold (default ±1.0), the strategy opens a mean‑reversion
+  trade (long one asset and short the other) and exits when the spread reverts.
+* **Backtesting:** Simulates the strategy to produce an equity curve, prints the final equity
+  and total return, and saves a plot of the z‑score with trading bands as well
+  as the equity curve to `pairs_trading_results.png`.
+
+### Running
+
+```bash
+python3 cointegration_pairs_trading.py --symbols KO PEP --start 2018-01-01 --end 2024-01-01 --threshold 1.5
+```
+
+Example output:
+
+```
+Downloaded 1500 rows of price data for ['KO', 'PEP'].
+Cointegration test statistic: -3.45, p-value: 0.02
+Hedge ratio (beta): 0.85
+Final equity: 1.12 (Total return: 12.00%)
+Plots saved to 'pairs_trading_results.png'.
+```
+
+## 7 Value at Risk & CVaR Simulation (`value_at_risk_simulation.py`)
+
+This script demonstrates how to compute Value at Risk (VaR) and Conditional
+Value at Risk (CVaR or Expected Shortfall) for a portfolio of equities using
+both parametric (Gaussian) and historical methods. The key steps are:
+
+* **Data acquisition:** Download daily adjusted close prices for a set of tickers (default: AAPL,
+  MSFT, GOOGL and AMZN) via `yfinance`. If the download fails, it
+  generates synthetic returns and constructs a price series from them as a
+  fallback.
+* **Return calculation:** Compute daily portfolio returns using equal weighting (weights can be
+  customised). Calculate the mean and standard deviation of returns.
+* **VaR and CVaR computation:** For the parametric method, assume returns follow a normal distribution and
+  compute VaR and CVaR using the appropriate quantile and normal density.
+  For the historical method, sort the empirical returns and compute VaR as
+  the percentile and CVaR as the average of the worst returns.
+* **Visualisation:** Plot the distribution of portfolio returns with vertical lines indicating
+  the VaR and CVaR thresholds; the plot is saved to
+  `portfolio_var_distribution.png`.
+
+### Running
+
+```bash
+python3 value_at_risk_simulation.py --symbols AAPL MSFT GOOGL AMZN --start 2018-01-01 --end 2023-12-31 --confidence 0.99 --method parametric
+```
+
+Example output:
+
+```
+Downloaded 1500 rows of price data for ['AAPL', 'MSFT', 'GOOGL', 'AMZN'].
+Parametric VaR (99%): 2.13%
+Parametric CVaR: 2.75%
+Plot saved to 'portfolio_var_distribution.png'.
+```
 ```
