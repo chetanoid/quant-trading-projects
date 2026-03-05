@@ -360,6 +360,50 @@ Vega: 39.1043
 Theta: -6.0491
 Rho: 49.0099
 Greek plots saved to 'option_greeks.png'.
+
+## 10 Kalman Filter Pairs Trading (`kalman_pairs_trading.py`)
+
+This project extends the pairs trading framework by allowing the
+hedge ratio between two assets to vary over time. A Kalman filter
+estimates the time‑varying beta that relates the price of a
+dependent asset to that of an independent asset. Trading signals are
+generated based on the z‑score of the spread (prediction residual).
+
+Main features:
+
+* **Adaptive hedge ratio:** Use a state‑space model where the hedge
+  ratio follows a random walk and is updated each day via a Kalman
+  filter. This captures changing market relationships more
+  effectively than a static regression.
+* **Signal logic:** Compute the spread and its rolling z‑score. Enter a
+  short position when the z‑score exceeds the entry threshold and a
+  long position when it drops below the negative entry threshold.
+  Exit positions when the spread reverts within the exit band. The
+  position sizes maintain dollar neutrality using the current
+  estimated hedge ratio.
+* **Fallback data:** If `yfinance` cannot fetch prices for the chosen
+  tickers, the script generates synthetic correlated prices for
+  demonstration. This ensures the code runs offline while still
+  illustrating the algorithm.
+* **Performance tracking:** Calculate cumulative equity, total return
+  and number of trades. Plot the evolving hedge ratio, z‑score with
+  entry/exit thresholds and the equity curve in a single figure
+  saved to `kalman_pairs_trading_results.png`.
+
+### Running
+
+```bash
+python3 kalman_pairs_trading.py --y_ticker SPY --x_ticker QQQ \
+    --start 2015-01-01 --end 2024-01-01 --entry 2.0 --exit 0.5
+```
+
+Example output:
+
+```
+Downloaded 1600 rows of price data for ['SPY', 'QQQ'].
+Final return: 5.13% with 18 trades.
+Results plot saved to 'kalman_pairs_trading_results.png'.
+```
 ```
 ```
 ```
