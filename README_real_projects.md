@@ -703,5 +703,69 @@ K=120, T=1.5: implied vol = 0.283
 Volatility surface plot saved to 'implied_vol_surface.png' and heatmap to 'implied_vol_heatmap.png'.
 ```
 
+## 17. Heston Stochastic Volatility Model & Option Pricing
+
+**Purpose.** Implement the Heston stochastic volatility model to simulate
+joint dynamics of an asset price and its variance, and price European
+options via Monte Carlo simulation. This project showcases understanding
+of stochastic processes, variance mean‑reversion, and Monte Carlo
+techniques. Advanced option pricing models like Heston are widely used
+in derivatives markets for their ability to capture volatility smiles and
+skews【843768438841720†L357-L373】.
+
+**Features.**
+
+* Downloads recent SPY data using `yfinance` (with a fallback) to set the
+  initial price and risk‑free rate.
+* Simulates thousands of sample paths for the asset price and variance
+  using the Euler–Maruyama scheme with correlated Brownian shocks.
+* Prices an at‑the‑money European call by averaging discounted payoffs.
+* Saves separate plots of sample asset price paths and variance paths as
+  `heston_asset_paths.png` and `heston_variance_paths.png`.
+
+**Run.**
+
+```bash
+python3 heston_stochastic_vol.py
+```
+
+Example output:
 
 ```
+Initial price S0: 99.85, risk‑free rate: 0.0150
+Estimated call price (Heston): 11.24
+```
+Two PNG images showing sample price and variance trajectories are saved.
+
+## 18. Almgren–Chriss Optimal Execution Model
+
+**Purpose.** Model the optimal execution schedule for liquidating a large
+position under market impact and risk considerations. The Almgren–Chriss
+(AC) framework balances expected trading cost against variance, yielding
+a closed‑form solution for trade sizes. Building this project demonstrates
+knowledge of optimal control and microstructure impact models【843768438841720†L33-L45】.
+
+**Features.**
+
+* Implements the closed‑form AC solution with permanent and temporary
+  market impact coefficients, volatility and risk aversion parameters.
+* Simulates hundreds of price paths and evaluates the distribution of
+  implementation shortfall for the optimal schedule.
+* Produces a bar chart of the optimal trade sizes per interval
+  (`ac_optimal_schedule.png`) and a histogram of the shortfall distribution
+  (`ac_shortfall_distribution.png`).
+
+**Run.**
+
+```bash
+python3 optimal_execution_almgren_chriss.py
+```
+
+Example output:
+
+```
+Optimal trade sizes (first five): [50865 50770 50676 50583 50490] ... total 1000000
+Mean implementation shortfall: $-5,032,456.78, Std: $345,236.45
+```
+Two PNG files illustrating the trading schedule and cost distribution are
+saved to disk.
