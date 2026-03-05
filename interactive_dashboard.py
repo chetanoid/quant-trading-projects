@@ -146,6 +146,14 @@ def monte_carlo_portfolios(prices: pd.DataFrame, num_portfolios: int = 5000):
     return pd.DataFrame(results, columns=columns)
 
 def build_dashboard():
+    """Assemble and save the interactive dashboard.
+
+    This function loads strategy returns, generates synthetic asset prices,
+    computes random portfolios and constructs a three‑panel interactive
+    dashboard.  The panels display cumulative returns, the efficient
+    frontier and an asset correlation heatmap.  The final dashboard is
+    written to `dashboard.html` in the current directory.
+    """
     # Load strategy returns
     strategy_csv = os.path.join(os.path.dirname(__file__), 'strategy_returns.csv')
     strat_df = load_strategy_returns(strategy_csv)
@@ -157,11 +165,16 @@ def build_dashboard():
     max_sharpe = portfolios.loc[portfolios['sharpe'].idxmax()]
     min_vol = portfolios.loc[portfolios['volatility'].idxmin()]
 
-    # Create a two-row subplot
-    fig = make_subplots(rows=2, cols=1, subplot_titles=(
+    # Compute correlation matrix of returns for heatmap
+    returns_matrix = prices.pct_change().dropna()
+    corr = returns_matrix.corr()
+
+    # Create a three‑row subplot: returns, efficient frontier, correlation heatmap
+    fig = make_subplots(rows=3, cols=1, subplot_titles=(
         'Cumulative Returns of Strategies',
-        'Efficient Frontier (Synthetic Data)'
-    ), vertical_spacing=0.25)
+        'Efficient Frontier (Synthetic Data)',
+        'Asset Return Correlation Heatmap'
+    ), vertical_spacing=0.20)
 
     # Plot cumulative returns
     fig.add_trace(go.Scatter(x=strat_df.index,
@@ -182,7 +195,7 @@ def build_dashboard():
     fig.update_yaxes(title_text='Cumulative Return', row=1, col=1)
     fig.update_xaxes(title_text='Observation Index', row=1, col=1)
 
-    # Plot efficient frontier
+    # Plot efficient frontier scatter
     fig.add_trace(go.Scatter(
         x=portfolios['volatility'],
         y=portfolios['return'],
@@ -209,7 +222,22 @@ def build_dashboard():
     ), row=2, col=1)
     fig.update_xaxes(title_text='Volatility (σ)', row=2, col=1)
     fig.update_yaxes(title_text='Return (μ)', row=2, col=1)
-    fig.update_layout(height=900, width=1000,
+
+    # Plot correlation heatmap
+    fig.add_trace(
+        go.Heatmap(
+            z=corr.values,
+            x=corr.columns,
+            y=corr.index,
+            colorscale='RdBu',
+            zmin=-1, zmax=1,
+            colorbar=dict(title='Correlation')
+        ), row=3, col=1
+    )
+    fig.update_xaxes(tickangle=45, row=3, col=1)
+    fig.update_yaxes(autorange='reversed', row=3, col=1)
+
+    fig.update_layout(height=1200, width=1000,
                       title_text='Interactive Quantitative Trading Dashboard',
                       showlegend=True)
     # Write the HTML file
