@@ -1,10 +1,17 @@
 # Quant Trading Projects
 
-This repository is a recruiting-focused portfolio of quantitative trading, derivatives, risk, and market microstructure projects. It is meant to show modelling depth, implementation ability, and range across research code, simulations, and systems work.
+This repository is a recruiter-facing portfolio of quantitative trading, derivatives, market microstructure, portfolio construction, and risk projects. It is meant to show mathematical range, implementation depth, and the ability to turn research ideas into runnable systems.
 
-The repo now includes more than 20 projects across Python and C++, with many scripts designed to run even without live data access by using embedded fallback data.
+The repo now includes more than 20 projects across Python and C++, with many scripts designed to keep working even when live market data is unavailable by using embedded fallback data.
 
-## What Is Here
+## Live View
+
+- Portfolio site: [https://chetanoid.github.io/quant-trading-projects/](https://chetanoid.github.io/quant-trading-projects/)
+- Public portfolio page source: [`portfolio.html`](portfolio.html)
+- Interactive dashboard: [`dashboard.html`](dashboard.html)
+- Project map: [`PROJECT_CATALOG.md`](PROJECT_CATALOG.md)
+
+## Core Areas
 
 - Market microstructure and execution: `limit_order_book_simulator.py`, `real_data_market_maker.py`, `avellaneda_stoikov_market_maker.py`, `optimal_execution_almgren_chriss.py`, `high_frequency_limit_order_book.cpp`
 - Statistical arbitrage and backtesting: `trading_strategies_research.py`, `real_data_strategy_backtest.py`, `cointegration_pairs_trading.py`, `kalman_pairs_trading.py`, `backtesting_engine.py`
@@ -23,8 +30,8 @@ python interactive_dashboard.py
 python portfolio_optimization.py
 ```
 
-## Legacy Examples
-The sections below are older starter writeups and no longer reflect the full scope of the repository.
+## Extended Walkthroughs
+The sections below give longer explanations for a subset of representative projects.
 
 This repository contains three standalone Python scripts that demonstrate fundamental concepts in quantitative trading and finance.  Each project focuses on a different aspect of the trading ecosystem and is designed for educational purposes.  All scripts are self‑contained and use synthetic data so that they can be run offline.
 
