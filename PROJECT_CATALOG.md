@@ -1,12 +1,21 @@
 # Project Catalog
 
-This file gives a recruiter-friendly map of the repository without forcing them to open every script.
+This file gives a quick recruiter-friendly map of the repository without requiring a full project-by-project read.
+
+## Core Documents
+
+- `README.md`: main public overview of the repository
+- `PROJECT_WALKTHROUGHS.md`: detailed sequential guide to all 24 projects
+- `FLAGSHIP_PROJECTS.md`: strongest files for elite quant screening
+- `RESUME_PROJECT_BULLETS.md`: resume-ready project descriptions
+- `portfolio.html`: polished portfolio landing page
+- `dashboard.html`: interactive results dashboard
 
 ## Market Microstructure And Execution
 
-- `limit_order_book_simulator.py`: toy limit order book and inventory-based market maker
+- `limit_order_book_simulator.py`: toy limit order book and inventory-aware quoting
 - `real_data_market_maker.py`: market-making simulation driven by real or fallback price data
-- `avellaneda_stoikov_market_maker.py`: classic inventory-aware quoting model
+- `avellaneda_stoikov_market_maker.py`: classic inventory-aware market-making model
 - `optimal_execution_almgren_chriss.py`: optimal execution schedule and shortfall analysis
 - `high_frequency_limit_order_book.cpp`: compact C++ matching engine example
 
@@ -14,8 +23,8 @@ This file gives a recruiter-friendly map of the repository without forcing them 
 
 - `trading_strategies_research.py`: synthetic-data momentum and mean-reversion benchmark
 - `real_data_strategy_backtest.py`: real-data backtester with offline fallback
-- `cointegration_pairs_trading.py`: Engle-Granger pairs workflow with signal construction
-- `kalman_pairs_trading.py`: dynamic hedge-ratio estimation with a Kalman filter
+- `cointegration_pairs_trading.py`: Engle-Granger pairs workflow with spread signals
+- `kalman_pairs_trading.py`: time-varying hedge-ratio estimation with a Kalman filter
 - `backtesting_engine.py`: reusable backtesting scaffold for multiple strategies
 
 ## Derivatives And Volatility
@@ -23,7 +32,7 @@ This file gives a recruiter-friendly map of the repository without forcing them 
 - `monte_carlo_option_pricing.py`: European option pricing with Monte Carlo simulation
 - `option_greeks_calculator.py`: Black-Scholes pricing and Greeks
 - `implied_vol_surface.py`: surface generation and implied-vol inversion
-- `heston_stochastic_vol.py`: stochastic volatility simulation and pricing
+- `heston_stochastic_vol.py`: stochastic-volatility simulation and pricing
 - `rough_bergomi_model.py`: rough-volatility style simulation
 - `garch_volatility_model.py`: volatility estimation and risk forecasting
 
@@ -40,13 +49,7 @@ This file gives a recruiter-friendly map of the repository without forcing them 
 - `real_data_sentiment_analysis.py`: financial-news sentiment classification with fallback data
 - `rl_trading_agent.py`: reinforcement-learning style trading example
 - `interactive_dashboard.py`: consolidated dashboard of strategy and portfolio outputs
-- `index.html`: lightweight portfolio landing page for the repo
-
-## Suggested Interview Flow
-
-- Start with `README.md`.
-- Open one execution project, one stat-arb project, one derivatives project, and one risk project.
-- Use `interactive_dashboard.py` to give a quick visual overview after generating strategy outputs.
+- `index.html`: redirect entry point to `portfolio.html`
 
 ## Best Files To Highlight First
 
