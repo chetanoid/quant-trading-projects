@@ -4,8 +4,7 @@ This file gives a quick recruiter-friendly map of the repository without requiri
 
 ## Core Documents
 
-- `README.md`: main public overview of the repository
-- `PROJECT_WALKTHROUGHS.md`: detailed sequential guide to all 24 projects
+- `README.md`: main public overview plus detailed project walkthroughs
 - `FLAGSHIP_PROJECTS.md`: strongest files for elite quant screening
 - `RESUME_PROJECT_BULLETS.md`: resume-ready project descriptions
 - `portfolio.html`: polished portfolio landing page
