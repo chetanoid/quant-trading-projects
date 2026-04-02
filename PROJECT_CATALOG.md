@@ -50,8 +50,9 @@ This file gives a recruiter-friendly map of the repository without forcing them 
 
 ## Best Files To Highlight First
 
-- `cointegration_pairs_trading.py`
-- `avellaneda_stoikov_market_maker.py`
-- `portfolio_optimization.py`
-- `backtesting_engine.py`
 - `high_frequency_limit_order_book.cpp`
+- `avellaneda_stoikov_market_maker.py`
+- `kalman_pairs_trading.py`
+- `rough_bergomi_model.py`
+- `optimal_execution_almgren_chriss.py`
+- `portfolio_optimization.py`

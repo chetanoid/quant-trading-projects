@@ -10,6 +10,8 @@ The repo now includes more than 20 projects across Python and C++, with many scr
 - Public portfolio page source: [`portfolio.html`](portfolio.html)
 - Interactive dashboard: [`dashboard.html`](dashboard.html)
 - Project map: [`PROJECT_CATALOG.md`](PROJECT_CATALOG.md)
+- Flagship shortlist: [`FLAGSHIP_PROJECTS.md`](FLAGSHIP_PROJECTS.md)
+- Resume-ready project bullets: [`RESUME_PROJECT_BULLETS.md`](RESUME_PROJECT_BULLETS.md)
 
 ## Core Areas
 

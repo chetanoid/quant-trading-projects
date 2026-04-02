@@ -123,33 +123,49 @@
         <div class="project-grid">
           <article class="project-card featured">
             <div class="project-meta">
-              <span class="tag">Execution</span>
-              <span>C++ + Python</span>
+              <span class="tag">Systems</span>
+              <span>C++</span>
             </div>
-            <h3>Market Microstructure and Execution Suite</h3>
+            <h3>High-Frequency Limit Order Book</h3>
             <p>
-              A cluster of projects covering order book simulation, Avellaneda-Stoikov market making,
-              Almgren-Chriss optimal execution, and a C++ matching engine for exchange-style order flow.
+              C++ matching-engine prototype with concurrent order producers, price-time-priority book logic,
+              and live inventory/cash tracking to show systems thinking under trading-style constraints.
             </p>
             <div class="project-links">
               <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/high_frequency_limit_order_book.cpp" target="_blank" rel="noreferrer">Matching Engine</a>
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/avellaneda_stoikov_market_maker.py" target="_blank" rel="noreferrer">Avellaneda-Stoikov</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/FLAGSHIP_PROJECTS.md" target="_blank" rel="noreferrer">Why It Matters</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-meta">
+              <span class="tag">Market Making</span>
+              <span>Microstructure</span>
+            </div>
+            <h3>Avellaneda-Stoikov Market Maker</h3>
+            <p>
+              Inventory-aware quoting model with reservation-price dynamics, optimal spread control,
+              stochastic order arrivals, and mark-to-market P&amp;L diagnostics.
+            </p>
+            <div class="project-links">
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/avellaneda_stoikov_market_maker.py" target="_blank" rel="noreferrer">Source</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/FLAGSHIP_PROJECTS.md" target="_blank" rel="noreferrer">Project Notes</a>
             </div>
           </article>
 
           <article class="project-card">
             <div class="project-meta">
               <span class="tag">Stat Arb</span>
-              <span>Backtesting</span>
+              <span>Adaptive Modeling</span>
             </div>
-            <h3>Pairs Trading and Strategy Research</h3>
+            <h3>Kalman Filter Pairs Trading</h3>
             <p>
-              Cointegration testing, Kalman filter hedge-ratio estimation, synthetic and real-data
-              backtests, and dashboard-ready outputs for strategy evaluation.
+              Dynamic hedge-ratio estimation with a Kalman filter, spread z-score signal construction,
+              market-neutral trade logic, and full equity-curve visualization.
             </p>
             <div class="project-links">
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/cointegration_pairs_trading.py" target="_blank" rel="noreferrer">Cointegration</a>
-              <a href="dashboard.html">Dashboard</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/kalman_pairs_trading.py" target="_blank" rel="noreferrer">Source</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/RESUME_PROJECT_BULLETS.md" target="_blank" rel="noreferrer">Resume Angle</a>
             </div>
           </article>
 
@@ -158,62 +174,46 @@
               <span class="tag">Derivatives</span>
               <span>Volatility</span>
             </div>
-            <h3>Volatility Modeling and Option Pricing</h3>
+            <h3>Rough Bergomi Volatility Model</h3>
             <p>
-              Monte Carlo pricing, Greeks, implied volatility surfaces, Heston stochastic volatility,
-              rough Bergomi simulation, and GARCH forecasting in one derivatives-focused block.
+              Rough-volatility simulation with fractional Gaussian noise and Monte Carlo option pricing,
+              aimed at modeling non-Markovian volatility dynamics beyond standard textbook models.
             </p>
             <div class="project-links">
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/rough_bergomi_model.py" target="_blank" rel="noreferrer">rough Bergomi</a>
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/heston_stochastic_vol.py" target="_blank" rel="noreferrer">Heston</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/rough_bergomi_model.py" target="_blank" rel="noreferrer">Source</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/FLAGSHIP_PROJECTS.md" target="_blank" rel="noreferrer">Project Notes</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-meta">
+              <span class="tag">Execution</span>
+              <span>Transaction Costs</span>
+            </div>
+            <h3>Almgren-Chriss Optimal Execution</h3>
+            <p>
+              Closed-form liquidation schedule under permanent impact, temporary impact, and risk aversion,
+              with simulated implementation-shortfall distributions across price paths.
+            </p>
+            <div class="project-links">
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/optimal_execution_almgren_chriss.py" target="_blank" rel="noreferrer">Source</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/FLAGSHIP_PROJECTS.md" target="_blank" rel="noreferrer">Project Notes</a>
             </div>
           </article>
 
           <article class="project-card">
             <div class="project-meta">
               <span class="tag">Portfolio</span>
-              <span>Risk</span>
+              <span>Risk / Allocation</span>
             </div>
-            <h3>Portfolio Construction and Risk Analytics</h3>
+            <h3>Portfolio Optimization</h3>
             <p>
-              Efficient frontier generation, risk parity, factor regression, and VaR/CVaR estimation
-              connect signal generation to portfolio-level decision-making.
+              Efficient-frontier exploration with random-portfolio sampling, annualized return/volatility
+              estimation, Sharpe optimization, and exportable portfolio analytics.
             </p>
             <div class="project-links">
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/portfolio_optimization.py" target="_blank" rel="noreferrer">Optimization</a>
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/value_at_risk_simulation.py" target="_blank" rel="noreferrer">VaR / CVaR</a>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-meta">
-              <span class="tag">ML</span>
-              <span>NLP / RL</span>
-            </div>
-            <h3>Machine Learning for Financial Data</h3>
-            <p>
-              Financial news sentiment classification, confusion-matrix reporting, and a reinforcement
-              learning trading agent add a modeling layer beyond pure rule-based strategies.
-            </p>
-            <div class="project-links">
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/real_data_sentiment_analysis.py" target="_blank" rel="noreferrer">Sentiment</a>
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/rl_trading_agent.py" target="_blank" rel="noreferrer">RL Agent</a>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <div class="project-meta">
-              <span class="tag">Repository</span>
-              <span>Overview</span>
-            </div>
-            <h3>Full Project Catalog</h3>
-            <p>
-              The repository includes a recruiter-friendly catalog for fast scanning, plus a cleaned-up
-              requirements file and improved runtime behavior for portfolio review.
-            </p>
-            <div class="project-links">
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/PROJECT_CATALOG.md" target="_blank" rel="noreferrer">Catalog</a>
-              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/requirements.txt" target="_blank" rel="noreferrer">Requirements</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/portfolio_optimization.py" target="_blank" rel="noreferrer">Source</a>
+              <a href="https://github.com/chetanoid/quant-trading-projects/blob/main/RESUME_PROJECT_BULLETS.md" target="_blank" rel="noreferrer">Resume Angle</a>
             </div>
           </article>
         </div>
