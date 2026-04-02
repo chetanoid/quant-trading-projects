@@ -38,6 +38,7 @@ Dependencies: numpy, pandas, scipy, matplotlib (optional), yfinance (optional).
 
 import argparse
 import math
+import os
 from typing import Tuple
 
 import numpy as np
@@ -54,6 +55,7 @@ except Exception:
     yf = None  # type: ignore
 
 try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
     import matplotlib.pyplot as plt
 except Exception:
     plt = None  # type: ignore
@@ -64,7 +66,10 @@ def download_prices(ticker: str, start: str, end: str) -> pd.Series:
     if yf is None:
         raise ImportError("yfinance is not available. Please install yfinance.")
     data = yf.download(ticker, start=start, end=end, progress=False)['Adj Close']
-    return data.dropna()
+    data = data.dropna()
+    if data.empty:
+        raise RuntimeError("Downloaded data is empty.")
+    return data
 
 
 def fallback_sample_prices() -> pd.Series:
@@ -82,6 +87,8 @@ def fallback_sample_prices() -> pd.Series:
 def compute_log_returns(prices: pd.Series) -> np.ndarray:
     """Compute demeaned log returns from price series."""
     log_returns = np.log(prices / prices.shift(1)).dropna().values
+    if len(log_returns) == 0:
+        raise ValueError("Not enough price history to compute returns.")
     # demean
     return log_returns - log_returns.mean()
 
@@ -104,6 +111,8 @@ def garch_likelihood(params: np.ndarray, data: np.ndarray) -> float:
 
 def fit_garch(data: np.ndarray) -> Tuple[float, float, float]:
     """Estimate GARCH(1,1) parameters by minimising the negative log-likelihood."""
+    if data.size < 2 or not np.isfinite(data).all() or np.allclose(np.std(data), 0.0):
+        return 1e-6, 0.05, 0.9
     if minimize is None:
         # simple fallback parameters
         return 1e-6, 0.05, 0.9
@@ -120,8 +129,10 @@ def compute_conditional_variance(data: np.ndarray, params: Tuple[float, float, f
     """Compute the conditional variance series given GARCH parameters."""
     omega, alpha, beta = params
     T = len(data)
+    if T == 0:
+        return np.array([])
     var = np.zeros(T)
-    var[0] = np.var(data)
+    var[0] = max(np.var(data), 1e-12)
     for t in range(1, T):
         var[t] = omega + alpha * data[t - 1] ** 2 + beta * var[t - 1]
     return var

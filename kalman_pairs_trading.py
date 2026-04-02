@@ -40,6 +40,7 @@ Dependencies: numpy, pandas, matplotlib (optional), yfinance (optional).
 """
 
 import argparse
+import os
 from typing import Tuple
 
 import numpy as np
@@ -51,6 +52,7 @@ except Exception:
     yf = None  # type: ignore
 
 try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
     import matplotlib.pyplot as plt
 except Exception:
     plt = None  # type: ignore
@@ -65,6 +67,8 @@ def download_two_assets(y_ticker: str, x_ticker: str, start: str, end: str) -> p
         # If only one ticker returned (unlikely), convert to DataFrame
         data = data.to_frame(name=y_ticker)
     data = data.dropna()
+    if data.empty or data.shape[1] < 2:
+        raise RuntimeError("Downloaded data is empty.")
     data.columns = [y_ticker, x_ticker]
     return data
 
@@ -127,7 +131,7 @@ def kalman_filter(y: np.ndarray, x: np.ndarray, q: float, r: float) -> Tuple[np.
 def compute_zscore(series: pd.Series, window: int) -> pd.Series:
     """Compute rolling z‑score of a series."""
     rolling_mean = series.rolling(window).mean()
-    rolling_std = series.rolling(window).std(ddof=0)
+    rolling_std = series.rolling(window).std(ddof=0).replace(0, np.nan)
     z = (series - rolling_mean) / rolling_std
     return z
 

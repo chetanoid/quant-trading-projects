@@ -1,4 +1,4 @@
-"""
+r"""
 Heston Stochastic Volatility Model Simulation and Option Pricing
 ----------------------------------------------------------------
 
@@ -38,8 +38,12 @@ knowledge, showcasing understanding of coupled SDEs and Monte Carlo methods.
 import warnings
 warnings.filterwarnings("ignore")
 
+import os
+
 import numpy as np
 import pandas as pd
+
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib.pyplot as plt
 
 try:

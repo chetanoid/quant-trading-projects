@@ -1,4 +1,30 @@
-# Quantitative Trading Project Portfolio
+# Quant Trading Projects
+
+This repository is a recruiting-focused portfolio of quantitative trading, derivatives, risk, and market microstructure projects. It is meant to show modelling depth, implementation ability, and range across research code, simulations, and systems work.
+
+The repo now includes more than 20 projects across Python and C++, with many scripts designed to run even without live data access by using embedded fallback data.
+
+## What Is Here
+
+- Market microstructure and execution: `limit_order_book_simulator.py`, `real_data_market_maker.py`, `avellaneda_stoikov_market_maker.py`, `optimal_execution_almgren_chriss.py`, `high_frequency_limit_order_book.cpp`
+- Statistical arbitrage and backtesting: `trading_strategies_research.py`, `real_data_strategy_backtest.py`, `cointegration_pairs_trading.py`, `kalman_pairs_trading.py`, `backtesting_engine.py`
+- Derivatives and volatility: `monte_carlo_option_pricing.py`, `option_greeks_calculator.py`, `implied_vol_surface.py`, `heston_stochastic_vol.py`, `rough_bergomi_model.py`, `garch_volatility_model.py`
+- Portfolio and risk: `portfolio_optimization.py`, `risk_parity_portfolio.py`, `factor_model_regression.py`, `value_at_risk_simulation.py`
+- Machine learning and dashboards: `sentiment_analysis_market_prediction.py`, `real_data_sentiment_analysis.py`, `rl_trading_agent.py`, `interactive_dashboard.py`
+
+For a cleaner file-by-file catalogue, see [PROJECT_CATALOG.md](PROJECT_CATALOG.md).
+
+## Quick Start
+
+```bash
+pip install -r requirements.txt
+python real_data_strategy_backtest.py
+python interactive_dashboard.py
+python portfolio_optimization.py
+```
+
+## Legacy Examples
+The sections below are older starter writeups and no longer reflect the full scope of the repository.
 
 This repository contains three standalone Python scripts that demonstrate fundamental concepts in quantitative trading and finance.  Each project focuses on a different aspect of the trading ecosystem and is designed for educational purposes.  All scripts are self‑contained and use synthetic data so that they can be run offline.
 

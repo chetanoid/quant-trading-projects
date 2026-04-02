@@ -27,8 +27,12 @@ Usage:
 """
 
 import argparse
+import os
+
 import numpy as np
 import pandas as pd
+
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib.pyplot as plt
 
 try:
@@ -102,7 +106,7 @@ def q_learning(prices: np.ndarray, episodes: int = 50, window: int = 5,
                 a = action_space[np.argmax(Q[s_idx])]
             a_idx = action_to_idx[a]
             # Reward: next price change times current position
-            reward = (prices[t + 1] - prices[t]) * position
+            reward = ((prices[t + 1] - prices[t]) / max(abs(prices[t]), 1e-8)) * position
             # Update position to chosen action
             position = a
             # Next state
@@ -123,20 +127,18 @@ def evaluate_policy(prices: np.ndarray, Q: np.ndarray, window: int = 5) -> np.nd
     state_to_idx = {s: i for i, s in enumerate(state_space)}
     action_space_array = np.array(action_space)
     position = 0
-    cash = 0.0
-    equity_curve = []
+    cash = 1.0
+    equity_curve = [cash]
     for t in range(1, len(prices)):
+        # Realise P&L from the position held over the previous step.
+        reward = ((prices[t] - prices[t - 1]) / max(abs(prices[t - 1]), 1e-8)) * position
+        cash += reward
         state = discretize_state(prices, t, window)
         s_idx = state_to_idx[state]
         # Choose best action
         a_idx = np.argmax(Q[s_idx])
-        new_position = action_space_array[a_idx]
-        # Reward from previous position
-        reward = (prices[t] - prices[t - 1]) * position
-        cash += reward
-        # Update position to new_position
-        position = new_position
-        equity_curve.append(cash + position * prices[t])
+        position = action_space_array[a_idx]
+        equity_curve.append(cash)
     return np.array(equity_curve)
 
 

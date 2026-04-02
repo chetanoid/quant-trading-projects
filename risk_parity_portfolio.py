@@ -35,6 +35,7 @@ Dependencies: pandas, numpy, matplotlib (optional), yfinance (optional).
 """
 
 import argparse
+import os
 from typing import List
 
 import numpy as np
@@ -45,7 +46,12 @@ try:
 except Exception:
     yf = None  # type: ignore
 
-import matplotlib.pyplot as plt
+try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
+    import matplotlib.pyplot as plt  # type: ignore
+    _HAVE_MATPLOTLIB = True
+except Exception:
+    _HAVE_MATPLOTLIB = False
 
 
 def download_prices(symbols: List[str], start: str, end: str) -> pd.DataFrame:
@@ -57,7 +63,10 @@ def download_prices(symbols: List[str], start: str, end: str) -> pd.DataFrame:
     data = yf.download(symbols, start=start, end=end, progress=False)['Adj Close']
     if isinstance(data, pd.Series):
         data = data.to_frame(name=symbols[0])
-    return data.dropna()
+    data = data.dropna()
+    if data.empty:
+        raise RuntimeError("Downloaded data is empty")
+    return data
 
 
 def generate_fallback_prices(n: int, d: int) -> pd.DataFrame:
@@ -82,6 +91,8 @@ def compute_returns(prices: pd.DataFrame) -> pd.DataFrame:
 def portfolio_risk_contribution(weights: np.ndarray, cov: np.ndarray) -> np.ndarray:
     """Compute risk contributions for each asset given weights and covariance matrix."""
     portfolio_vol = np.sqrt(weights.T @ cov @ weights)
+    if portfolio_vol <= 0 or np.isnan(portfolio_vol):
+        return np.zeros_like(weights)
     # Marginal risk contribution: derivative of portfolio vol wrt each weight
     mrc = (cov @ weights) / portfolio_vol
     # Total risk contribution of each asset
@@ -103,7 +114,8 @@ def risk_parity_weights(cov: np.ndarray, max_iter: int = 1000, tol: float = 1e-8
         w = w * (target_rc / rc)
         # Normalise weights to sum to 1
         w = np.maximum(w, 0)
-        w = w / w.sum()
+        total_weight = w.sum()
+        w = w / total_weight if total_weight != 0 else np.ones(n) / n
         # Check convergence
         if np.linalg.norm(rc - target_rc) < tol:
             break
@@ -122,7 +134,10 @@ def annualised_volatility(vol_returns: pd.Series) -> float:
 
 def sharpe_ratio(vol_returns: pd.Series, risk_free: float = 0.0) -> float:
     """Compute the Sharpe ratio of a return series (risk‑free rate assumed constant)."""
-    return (vol_returns.mean() - risk_free / 252) / vol_returns.std() * np.sqrt(252)
+    std = vol_returns.std()
+    if std == 0 or np.isnan(std):
+        return 0.0
+    return (vol_returns.mean() - risk_free / 252) / std * np.sqrt(252)
 
 
 def main() -> None:
@@ -163,17 +178,18 @@ def main() -> None:
     print(f"\nRisk Parity Portfolio: Return={rp_ret:.2%}, Volatility={rp_vol:.2%}, Sharpe={rp_sr:.2f}")
     print(f"Equal Weight Portfolio: Return={ew_ret:.2%}, Volatility={ew_vol:.2%}, Sharpe={ew_sr:.2f}")
     # Plot weight allocation
-    try:
-        fig, ax = plt.subplots(figsize=(6, 4))
-        ax.bar(args.symbols, rp_weights)
-        ax.set_title('Risk Parity Portfolio Weights')
-        ax.set_ylabel('Weight')
-        plt.tight_layout()
-        fig.savefig('risk_parity_weights.png')
-        plt.close(fig)
-        print("Plot saved to 'risk_parity_weights.png'.")
-    except Exception as e:
-        print(f"Plotting failed: {e}")
+    if _HAVE_MATPLOTLIB:
+        try:
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.bar(args.symbols, rp_weights)
+            ax.set_title('Risk Parity Portfolio Weights')
+            ax.set_ylabel('Weight')
+            plt.tight_layout()
+            fig.savefig('risk_parity_weights.png')
+            plt.close(fig)
+            print("Plot saved to 'risk_parity_weights.png'.")
+        except Exception as e:
+            print(f"Plotting failed: {e}")
 
 
 if __name__ == '__main__':

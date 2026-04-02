@@ -1,4 +1,4 @@
-"""
+r"""
 Almgren–Chriss Optimal Execution Model
 --------------------------------------
 
@@ -33,7 +33,11 @@ reflect market conditions. For further reading, see: Robert Almgren and Neil
 Chriss, "Optimal execution of portfolio transactions," *Journal of Risk* (2000).
 """
 
+import os
+
 import numpy as np
+
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib
 # Use a non-interactive backend to avoid issues in headless environments
 matplotlib.use("Agg")  # noqa: E402

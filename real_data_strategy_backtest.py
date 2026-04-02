@@ -24,6 +24,7 @@ You can adjust the lookback period by modifying the ``LOOKBACK`` constant.
 Author: OpenAI assistant
 """
 
+import os
 import pandas as pd
 import numpy as np
 from io import StringIO
@@ -31,6 +32,7 @@ from io import StringIO
 # Attempt to import matplotlib for plotting cumulative returns.  If not
 # available, the backtest will still run and output metrics and CSV.
 try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
     import matplotlib.pyplot as plt  # type: ignore
     _HAVE_MATPLOTLIB = True
 except Exception:

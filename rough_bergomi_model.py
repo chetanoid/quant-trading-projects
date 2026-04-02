@@ -31,7 +31,11 @@ and the ability to implement models not available in standard libraries.
 """
 
 import math
+import os
+
 import numpy as np
+
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib.pyplot as plt
 
 def generate_fgn(n, H, dt):
@@ -178,8 +182,18 @@ def main():
     plt.savefig('rough_bergomi_price.png')
     plt.close(fig)
     # Price a call option
-    price, stderr = price_call_mc(strike=strike, maturity=T, n_paths=500, T=T, n_steps=n_steps, xi=xi, eta=eta, H=H, rho=rho, S0=S0)
-    print(f"MC price of call option: {price:.4f} ± {stderr:.4f}")
+    price, stderr = price_call_mc(
+        strike=strike,
+        maturity=T,
+        n_paths=500,
+        n_steps=n_steps,
+        xi=xi,
+        eta=eta,
+        H=H,
+        rho=rho,
+        S0=S0,
+    )
+    print(f"MC price of call option: {price:.4f} +/- {stderr:.4f}")
 
 
 if __name__ == '__main__':

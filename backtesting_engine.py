@@ -42,11 +42,14 @@ position sizing algorithms).
 from __future__ import annotations
 
 import datetime
+import os
 from dataclasses import dataclass
 from typing import Callable, Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
+
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib.pyplot as plt
 
 try:
@@ -221,12 +224,25 @@ def backtest_strategy(
     normalised_returns = portfolio_returns / normaliser
     normalised_returns = normalised_returns.fillna(0)
 
+    if normalised_returns.empty:
+        equity_index = returns.index[:1] if not returns.empty else pd.RangeIndex(1)
+        equity = pd.Series([1.0], index=equity_index, dtype=float)
+        return equity, {
+            "cumulative_return": 0.0,
+            "annualised_vol": 0.0,
+            "sharpe_ratio": 0.0,
+            "max_drawdown": 0.0,
+        }
+
     equity = (1 + normalised_returns).cumprod()
-    cumulative_return = equity.iloc[-1] - 1
-    daily_vol = normalised_returns.std(ddof=0)
-    annualised_vol = daily_vol * np.sqrt(annualisation_factor)
-    sharpe_ratio = (normalised_returns.mean() / daily_vol) * np.sqrt(annualisation_factor)
-    max_dd = max_drawdown(equity)
+    cumulative_return = float(equity.iloc[-1] - 1)
+    daily_vol = float(normalised_returns.std(ddof=0))
+    annualised_vol = float(daily_vol * np.sqrt(annualisation_factor))
+    if daily_vol == 0 or np.isnan(daily_vol):
+        sharpe_ratio = 0.0
+    else:
+        sharpe_ratio = float((normalised_returns.mean() / daily_vol) * np.sqrt(annualisation_factor))
+    max_dd = float(max_drawdown(equity))
 
     metrics = {
         "cumulative_return": cumulative_return,

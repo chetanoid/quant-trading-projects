@@ -30,6 +30,7 @@ Dependencies: pandas, numpy, matplotlib, scipy (for the normal quantile), yfinan
 """
 
 import argparse
+import os
 from typing import List, Tuple
 
 import numpy as np
@@ -40,6 +41,7 @@ try:
 except Exception:
     yf = None  # type: ignore
 
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib.pyplot as plt
 
 try:
@@ -57,7 +59,10 @@ def download_prices(symbols: List[str], start: str, end: str) -> pd.DataFrame:
     data = yf.download(symbols, start=start, end=end, progress=False)['Adj Close']
     if isinstance(data, pd.Series):
         data = data.to_frame(name=symbols[0])
-    return data.dropna()
+    data = data.dropna()
+    if data.empty:
+        raise RuntimeError("Downloaded data is empty.")
+    return data
 
 
 def generate_fallback_returns(n: int = 500, d: int = 4) -> pd.DataFrame:
@@ -111,15 +116,15 @@ def parametric_var(return_series: pd.Series, confidence: float) -> Tuple[float, 
         )
     z = norm.ppf(1 - confidence)
     var = -(mu + sigma * z)
-    # CVaR under normal distribution: mu + sigma * (norm.pdf(z) / (1 - confidence))
-    cvar = -(mu + sigma * norm.pdf(z) / (1 - confidence))
+    # Expected shortfall of returns lives further into the loss tail than VaR.
+    cvar = -mu + sigma * norm.pdf(z) / (1 - confidence)
     return var, cvar
 
 
 def historical_var(return_series: pd.Series, confidence: float) -> Tuple[float, float]:
     """Compute historical (empirical) VaR and CVaR."""
     sorted_returns = return_series.sort_values()
-    cutoff_index = int((1 - confidence) * len(sorted_returns))
+    cutoff_index = max(1, int((1 - confidence) * len(sorted_returns)))
     var = -sorted_returns.iloc[:cutoff_index].max()
     cvar = -sorted_returns.iloc[:cutoff_index].mean()
     return var, cvar

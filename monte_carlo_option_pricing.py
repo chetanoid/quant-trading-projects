@@ -19,6 +19,8 @@ Author: OpenAI assistant
 
 from __future__ import annotations
 
+import os
+
 import numpy as np
 import pandas as pd
 from typing import Tuple
@@ -29,6 +31,7 @@ except Exception:
     yf = None  # type: ignore
 
 try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
     import matplotlib.pyplot as plt  # type: ignore
     _HAVE_MATPLOTLIB = True
 except Exception:
@@ -182,7 +185,7 @@ def price_european_call(
 
 def main() -> None:
     price, se = price_european_call()
-    print(f"Estimated call option price: {price:.4f} ± {se:.4f} (standard error)")
+    print(f"Estimated call option price: {price:.4f} +/- {se:.4f} (standard error)")
 
 
 if __name__ == "__main__":

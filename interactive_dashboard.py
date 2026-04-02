@@ -45,39 +45,73 @@ import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
-def load_strategy_returns(csv_path: str) -> pd.DataFrame:
-    """Load strategy returns from a CSV file.
+RETURN_FILE_CANDIDATES = ("strategy_real_returns.csv", "strategy_returns.csv")
 
-    Expects columns: 'date', 'bh_returns', 'momentum_returns',
-    'mean_reversion_returns'.  Missing values are filled with zeros.
-    Returns a DataFrame with the raw returns and computed cumulative
-    returns for each strategy.
-    """
-    if not os.path.isfile(csv_path):
-        # Create an empty DataFrame with zeros if file missing.
-        df = pd.DataFrame({
-            'date': list(range(100)),
-            'bh_returns': np.zeros(100),
-            'momentum_returns': np.zeros(100),
-            'mean_reversion_returns': np.zeros(100)
-        })
-    else:
-        df = pd.read_csv(csv_path)
-        # Ensure required columns exist
-        required = ['bh_returns', 'momentum_returns', 'mean_reversion_returns']
-        for col in required:
-            if col not in df.columns:
-                df[col] = 0.0
-    # Replace NaNs with zero returns
-    df[['bh_returns', 'momentum_returns', 'mean_reversion_returns']] = (
-        df[['bh_returns', 'momentum_returns', 'mean_reversion_returns']]
-        .fillna(0.0)
+
+def _build_placeholder_returns(n_points: int = 100) -> pd.DataFrame:
+    df = pd.DataFrame(
+        {
+            "plot_index": np.arange(n_points),
+            "bh_returns": np.zeros(n_points),
+            "momentum_returns": np.zeros(n_points),
+            "mean_reversion_returns": np.zeros(n_points),
+        }
     )
-    # Compute cumulative returns for each strategy
-    df['cum_bh'] = (1.0 + df['bh_returns']).cumprod() - 1.0
-    df['cum_momentum'] = (1.0 + df['momentum_returns']).cumprod() - 1.0
-    df['cum_mean_rev'] = (1.0 + df['mean_reversion_returns']).cumprod() - 1.0
+    df["cum_bh"] = 0.0
+    df["cum_momentum"] = 0.0
+    df["cum_mean_rev"] = 0.0
     return df
+
+
+def _detect_plot_index(df: pd.DataFrame) -> pd.Series:
+    for candidate in ("date", "Date"):
+        if candidate in df.columns:
+            series = df[candidate]
+            if series.dtype == object:
+                parsed = pd.to_datetime(series, errors="coerce")
+                if parsed.notna().all():
+                    return parsed
+            return series
+    return pd.Series(np.arange(len(df)), name="plot_index")
+
+
+def _normalise_strategy_returns(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    alias_map = {
+        "return": "bh_returns",
+        "buy_and_hold": "bh_returns",
+        "bh_returns": "bh_returns",
+        "momentum": "momentum_returns",
+        "momentum_returns": "momentum_returns",
+        "mean_reversion": "mean_reversion_returns",
+        "mean_reversion_returns": "mean_reversion_returns",
+    }
+
+    for original, canonical in alias_map.items():
+        if original in df.columns and canonical not in df.columns:
+            df[canonical] = df[original]
+
+    for column in ("bh_returns", "momentum_returns", "mean_reversion_returns"):
+        if column not in df.columns:
+            df[column] = 0.0
+
+    df["plot_index"] = _detect_plot_index(df)
+    df[["bh_returns", "momentum_returns", "mean_reversion_returns"]] = df[
+        ["bh_returns", "momentum_returns", "mean_reversion_returns"]
+    ].fillna(0.0)
+    df["cum_bh"] = (1.0 + df["bh_returns"]).cumprod() - 1.0
+    df["cum_momentum"] = (1.0 + df["momentum_returns"]).cumprod() - 1.0
+    df["cum_mean_rev"] = (1.0 + df["mean_reversion_returns"]).cumprod() - 1.0
+    return df
+
+
+def load_strategy_returns(base_dir: str) -> tuple[pd.DataFrame, str | None]:
+    """Load whichever strategy return CSV is available first."""
+    for filename in RETURN_FILE_CANDIDATES:
+        candidate = os.path.join(base_dir, filename)
+        if os.path.isfile(candidate):
+            return _normalise_strategy_returns(pd.read_csv(candidate)), candidate
+    return _build_placeholder_returns(), None
 
 def generate_synthetic_prices(n_assets: int = 5, n_days: int = 252*2) -> pd.DataFrame:
     """Generate synthetic asset price data using geometric Brownian motion.
@@ -154,9 +188,8 @@ def build_dashboard():
     frontier and an asset correlation heatmap.  The final dashboard is
     written to `dashboard.html` in the current directory.
     """
-    # Load strategy returns
-    strategy_csv = os.path.join(os.path.dirname(__file__), 'strategy_returns.csv')
-    strat_df = load_strategy_returns(strategy_csv)
+    base_dir = os.path.dirname(__file__)
+    strat_df, source_file = load_strategy_returns(base_dir)
 
     # Generate synthetic prices and portfolios
     prices = generate_synthetic_prices(n_assets=5, n_days=252 * 2)
@@ -220,23 +253,23 @@ def build_dashboard():
     ), vertical_spacing=0.20, specs=[[{}], [{}], [{}], [{'type': 'table'}]])
 
     # Plot cumulative returns
-    fig.add_trace(go.Scatter(x=strat_df.index,
+    fig.add_trace(go.Scatter(x=strat_df['plot_index'],
                              y=strat_df['cum_bh'],
                              name='Buy and Hold',
                              mode='lines'),
                   row=1, col=1)
-    fig.add_trace(go.Scatter(x=strat_df.index,
+    fig.add_trace(go.Scatter(x=strat_df['plot_index'],
                              y=strat_df['cum_momentum'],
                              name='Momentum Strategy',
                              mode='lines'),
                   row=1, col=1)
-    fig.add_trace(go.Scatter(x=strat_df.index,
+    fig.add_trace(go.Scatter(x=strat_df['plot_index'],
                              y=strat_df['cum_mean_rev'],
                              name='Mean Reversion Strategy',
                              mode='lines'),
                   row=1, col=1)
     fig.update_yaxes(title_text='Cumulative Return', row=1, col=1)
-    fig.update_xaxes(title_text='Observation Index', row=1, col=1)
+    fig.update_xaxes(title_text='Observation', row=1, col=1)
 
     # Plot efficient frontier scatter
     fig.add_trace(go.Scatter(
@@ -288,11 +321,17 @@ def build_dashboard():
         ), row=4, col=1
     )
 
+    title_text = 'Interactive Quantitative Trading Dashboard'
+    if source_file is not None:
+        title_text += f"<br><sup>Strategy data: {os.path.basename(source_file)}</sup>"
+    else:
+        title_text += "<br><sup>No strategy CSV found; using placeholder data.</sup>"
+
     fig.update_layout(height=1500, width=1000,
-                      title_text='Interactive Quantitative Trading Dashboard',
+                      title_text=title_text,
                       showlegend=True)
     # Write the HTML file
-    output_path = os.path.join(os.path.dirname(__file__), 'dashboard.html')
+    output_path = os.path.join(base_dir, 'dashboard.html')
     fig.write_html(output_path, include_plotlyjs='cdn')
     print(f"Dashboard saved to {output_path}")
 

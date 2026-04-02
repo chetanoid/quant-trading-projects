@@ -84,12 +84,12 @@ def run_backtest(n=1000):
     print("Backtest Summary (synthetic data)")
     print("--------------------------------")
     print(f"Benchmark (Buy & Hold): Cumulative Return = {benchmark_metrics['cumulative_return']:.2%}, "
-          f"Volatility = {benchmark_metrics['volatility']:.2%}, Sharpe ≈ {benchmark_metrics['sharpe']:.2f}")
+          f"Volatility = {benchmark_metrics['volatility']:.2%}, Sharpe ~ {benchmark_metrics['sharpe']:.2f}")
     print(f"Momentum Strategy:      Cumulative Return = {mom_metrics['cumulative_return']:.2%}, "
-          f"Volatility = {mom_metrics['volatility']:.2%}, Sharpe ≈ {mom_metrics['sharpe']:.2f}, "
+          f"Volatility = {mom_metrics['volatility']:.2%}, Sharpe ~ {mom_metrics['sharpe']:.2f}, "
           f"Max Drawdown = {mom_metrics['max_drawdown']:.2%}")
-    print(f"Mean‑Reversion Strategy: Cumulative Return = {mr_metrics['cumulative_return']:.2%}, "
-          f"Volatility = {mr_metrics['volatility']:.2%}, Sharpe ≈ {mr_metrics['sharpe']:.2f}, "
+    print(f"Mean-Reversion Strategy: Cumulative Return = {mr_metrics['cumulative_return']:.2%}, "
+          f"Volatility = {mr_metrics['volatility']:.2%}, Sharpe ~ {mr_metrics['sharpe']:.2f}, "
           f"Max Drawdown = {mr_metrics['max_drawdown']:.2%}")
 
     # Optionally save results to CSV

@@ -30,6 +30,7 @@ Dependencies: pandas, numpy, statsmodels, matplotlib, yfinance (optional).
 """
 
 import argparse
+import os
 from dataclasses import dataclass
 from typing import Tuple, List
 
@@ -44,6 +45,7 @@ except Exception:
 
 from statsmodels.tsa.stattools import coint  # type: ignore
 
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib.pyplot as plt
 
 
@@ -72,7 +74,10 @@ def download_prices(symbols: List[str], start: str, end: str) -> pd.DataFrame:
     if isinstance(data, pd.Series):
         # If only one symbol, convert to DataFrame
         data = data.to_frame(name=symbols[0])
-    return data.dropna()
+    data = data.dropna()
+    if data.empty:
+        raise RuntimeError("Downloaded data is empty")
+    return data
 
 
 def generate_fallback_data(n: int = 300) -> pd.DataFrame:

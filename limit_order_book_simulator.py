@@ -160,6 +160,7 @@ def simulate_market(timesteps: int = 200, base_price: float = 100.0, volatility:
     mid_price = base_price
     price_history = []
     p_and_l = []
+    trade_count = 0
 
     for t in range(timesteps):
         # Update mid price via geometric Brownian motion
@@ -190,14 +191,15 @@ def simulate_market(timesteps: int = 200, base_price: float = 100.0, volatility:
 
         # Match orders and update market maker inventory and cash
         trades = book.match()
+        trade_count += len(trades)
         maker.update_inventory(trades)
         p_and_l.append(maker.mark_to_market)
 
     # Summary statistics
     final_pl = maker.mark_to_market
-    total_trades = len([t for t in book.match()])
+    total_trades = trade_count
     print("Simulation complete.")
-    print(f"Final P&L (mark‑to‑market): {final_pl:.2f}")
+    print(f"Final P&L (mark-to-market): {final_pl:.2f}")
     print(f"Inventory at end: {maker.inventory}")
     print(f"Cash at end: {maker.cash:.2f}")
     print(f"Approx. number of trades executed by market maker: {total_trades}")

@@ -36,8 +36,12 @@ Usage:
 """
 
 import argparse
+import os
+
 import numpy as np
 import pandas as pd
+
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
 import matplotlib.pyplot as plt
 
 try:

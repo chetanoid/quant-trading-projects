@@ -34,9 +34,13 @@ exchange or data provider.
 
 from __future__ import annotations
 
-import numpy as np
-import matplotlib.pyplot as plt
+import os
 from typing import Callable
+
+import numpy as np
+
+os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
+import matplotlib.pyplot as plt
 
 try:
     from scipy.stats import norm  # type: ignore

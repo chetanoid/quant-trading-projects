@@ -33,6 +33,7 @@ Author: OpenAI assistant
 
 import heapq
 import itertools
+import os
 import random
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
@@ -40,6 +41,7 @@ from typing import List, Optional, Tuple
 # We try to import matplotlib for plotting.  If it is not
 # installed, the simulation will run without generating figures.
 try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
     import matplotlib.pyplot as plt  # type: ignore
     _HAVE_MATPLOTLIB = True
 except Exception:
@@ -266,7 +268,7 @@ def simulate_market_with_real_data(price_series: List[float], spread: float = 0.
     # Final statistics
     final_pl = maker.mark_to_market
     print("Simulation complete using {} price points.".format(len(price_series)))
-    print(f"Final mark‑to‑market P&L: {final_pl:.2f}")
+    print(f"Final mark-to-market P&L: {final_pl:.2f}")
     print(f"Final inventory: {maker.inventory}")
 
     # Generate diagnostic plots if matplotlib is available.  These plots

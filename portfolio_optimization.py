@@ -26,6 +26,8 @@ Author: OpenAI assistant
 
 from __future__ import annotations
 
+import os
+
 import numpy as np
 import pandas as pd
 from typing import List, Tuple
@@ -36,6 +38,7 @@ except Exception:
     yf = None  # type: ignore
 
 try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
     import matplotlib.pyplot as plt  # type: ignore
     _HAVE_MATPLOTLIB = True
 except Exception:
@@ -220,12 +223,12 @@ def main() -> None:
     print("Maximum Sharpe Ratio Portfolio:")
     print(max_sharpe_stats)
     print("Weights:")
-    print(dict(zip(prices.columns, max_sharpe_weights.round(3))))
+    print({name: float(weight) for name, weight in zip(prices.columns, max_sharpe_weights.round(3))})
     print()
     print("Minimum Volatility Portfolio:")
     print(min_vol_stats)
     print("Weights:")
-    print(dict(zip(prices.columns, min_vol_weights.round(3))))
+    print({name: float(weight) for name, weight in zip(prices.columns, min_vol_weights.round(3))})
     # Save results to CSV
     stats.to_csv("portfolio_optimisation.csv", index=False)
     print("Portfolio statistics saved to portfolio_optimisation.csv")

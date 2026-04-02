@@ -37,6 +37,7 @@ Dependencies: numpy, scipy (optional), matplotlib (optional).
 
 import argparse
 import math
+import os
 from typing import Tuple
 
 import numpy as np
@@ -47,6 +48,7 @@ except Exception:
     norm = None  # type: ignore
 
 try:
+    os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(__file__), ".mplconfig"))
     import matplotlib.pyplot as plt
 except Exception:
     plt = None  # type: ignore

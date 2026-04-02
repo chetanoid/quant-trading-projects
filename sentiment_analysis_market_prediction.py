@@ -83,7 +83,7 @@ def main():
     # Test on unseen examples
     test_examples = [
         "Central bank hints at tightening, markets jittery",
-        "Record‑breaking quarter sends stock soaring",
+        "Record-breaking quarter sends stock soaring",
         "Economic slowdown worries economists",
         "Excited about the new electric car release",
     ]
