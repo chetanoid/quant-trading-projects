@@ -21,7 +21,6 @@ Run this script directly to perform the optimisation:
 
     python3 portfolio_optimization.py
 
-Author: OpenAI assistant
 """
 
 from __future__ import annotations

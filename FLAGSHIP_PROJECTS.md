@@ -1,6 +1,6 @@
-# Flagship Projects For Elite Quant Screening
+# Flagship Projects
 
-This file highlights the strongest 6 projects in the repository for elite quant recruiting.
+This file highlights six of the strongest projects in the repository.
 
 The selection favors work that shows mathematical rigor, trading intuition, statistical modeling, systems awareness, and clean implementation.
 

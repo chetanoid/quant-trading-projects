@@ -14,7 +14,6 @@ Usage:
 
     python3 monte_carlo_option_pricing.py
 
-Author: OpenAI assistant
 """
 
 from __future__ import annotations

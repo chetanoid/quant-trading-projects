@@ -17,7 +17,6 @@ as this script; if you do not have it, download it from the open
 dataset is relatively small (~6 k lines) and suitable for quick
 prototyping.
 
-Author: OpenAI assistant
 """
 import os
 

@@ -18,7 +18,6 @@ The code is heavily commented to help the reader follow along.  Feel free to exp
 with the parameters (number of timesteps, volatility, order size, etc.) to see how the
 strategy behaves under different conditions.
 
-Author: OpenAI assistant
 """
 
 import heapq

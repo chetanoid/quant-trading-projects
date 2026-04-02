@@ -1,11 +1,11 @@
 # Project Catalog
 
-This file gives a quick recruiter-friendly map of the repository without requiring a full project-by-project read.
+This file gives a quick map of the repository without requiring a full project-by-project read.
 
 ## Core Documents
 
 - `README.md`: main public overview plus detailed project walkthroughs
-- `FLAGSHIP_PROJECTS.md`: strongest files for elite quant screening
+- `FLAGSHIP_PROJECTS.md`: standout flagship files in the repository
 - `RESUME_PROJECT_BULLETS.md`: resume-ready project descriptions
 - `portfolio.html`: polished portfolio landing page
 - `dashboard.html`: interactive results dashboard

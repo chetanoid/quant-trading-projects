@@ -21,7 +21,6 @@ Strategy definitions:
 
 You can adjust the lookback period by modifying the ``LOOKBACK`` constant.
 
-Author: OpenAI assistant
 """
 
 import os

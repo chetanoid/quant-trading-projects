@@ -8,7 +8,7 @@ This portfolio contains 24 quantitative trading and finance projects spanning ma
 - Interactive dashboard: `dashboard.html`
 - Project catalog: `PROJECT_CATALOG.md`
 - Flagship shortlist: `FLAGSHIP_PROJECTS.md`
-- Resume-ready bullets: `RESUME_PROJECT_BULLETS.md`
+- Project bullet library: `RESUME_PROJECT_BULLETS.md`
 
 ## Quick Start
 
@@ -226,7 +226,7 @@ This file implements a simple Q-learning style trading agent that interacts with
 
 ### 24. Interactive Quantitative Trading Dashboard (`interactive_dashboard.py`)
 
-This project builds the repository dashboard by combining strategy, portfolio, and risk outputs into a single interactive HTML report. It is the presentation layer that helps recruiters review results quickly without running every script themselves.
+This project builds the repository dashboard by combining strategy, portfolio, and risk outputs into a single interactive HTML report. It is the presentation layer that helps readers review results quickly without running every script themselves.
 
 - Inputs: strategy return CSVs plus generated or fallback price data
 - Outputs: `dashboard.html`
@@ -236,4 +236,4 @@ This project builds the repository dashboard by combining strategy, portfolio, a
 
 - `index.html` redirects to `portfolio.html` for a cleaner public landing page.
 - Generated plots and CSV outputs are committed where they help readers review results quickly.
-- The strongest shortlist for elite quant recruiting lives in `FLAGSHIP_PROJECTS.md`.
+- A focused shortlist of standout projects lives in `FLAGSHIP_PROJECTS.md`.

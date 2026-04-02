@@ -11,7 +11,6 @@ unseen texts are shown.  The aim is to illustrate a basic workflow for transform
 text into features and fitting classification models, not to build a production‑grade
 trading signal.
 
-Author: OpenAI assistant
 """
 
 from typing import List, Tuple

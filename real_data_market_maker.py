@@ -28,7 +28,6 @@ execute the simulation.  It will print final P&L and basic summary
 statistics.  Feel free to modify the sample price series or the market
 maker parameters to explore different behaviours.
 
-Author: OpenAI assistant
 """
 
 import heapq

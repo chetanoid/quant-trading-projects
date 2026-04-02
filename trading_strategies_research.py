@@ -12,7 +12,6 @@ The goal is to illustrate how to structure a basic backtesting loop, calculate c
 metrics, and contrast the behaviours of trend‑following and mean‑reversion approaches.  The code
 is self‑contained and can be easily adapted to real market data when available.
 
-Author: OpenAI assistant
 """
 
 import math
