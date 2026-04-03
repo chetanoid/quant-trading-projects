@@ -4,11 +4,11 @@ This portfolio contains 24 quantitative trading and finance projects spanning ma
 
 ## Quick Links
 
-- Public portfolio page: `portfolio.html`
-- Interactive dashboard: `dashboard.html`
-- Project catalog: `PROJECT_CATALOG.md`
-- Flagship shortlist: `FLAGSHIP_PROJECTS.md`
-- Project bullet library: `RESUME_PROJECT_BULLETS.md`
+- Public portfolio page: [Live portfolio](https://chetanoid.github.io/quant-trading-projects/portfolio.html)
+- Interactive dashboard: [Live dashboard](https://chetanoid.github.io/quant-trading-projects/dashboard.html)
+- Project catalog: [PROJECT_CATALOG.md](PROJECT_CATALOG.md)
+- Flagship shortlist: [FLAGSHIP_PROJECTS.md](FLAGSHIP_PROJECTS.md)
+- Project bullet library: [RESUME_PROJECT_BULLETS.md](RESUME_PROJECT_BULLETS.md)
 
 ## Quick Start
 
@@ -23,12 +23,12 @@ Most scripts run directly with `python <script_name>.py`. Many projects try live
 
 ## Best Files To Open First
 
-1. `high_frequency_limit_order_book.cpp`
-2. `avellaneda_stoikov_market_maker.py`
-3. `kalman_pairs_trading.py`
-4. `rough_bergomi_model.py`
-5. `optimal_execution_almgren_chriss.py`
-6. `portfolio_optimization.py`
+1. [high_frequency_limit_order_book.cpp](high_frequency_limit_order_book.cpp)
+2. [avellaneda_stoikov_market_maker.py](avellaneda_stoikov_market_maker.py)
+3. [kalman_pairs_trading.py](kalman_pairs_trading.py)
+4. [rough_bergomi_model.py](rough_bergomi_model.py)
+5. [optimal_execution_almgren_chriss.py](optimal_execution_almgren_chriss.py)
+6. [portfolio_optimization.py](portfolio_optimization.py)
 
 ## Market Microstructure And Execution
 

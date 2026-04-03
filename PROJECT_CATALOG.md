@@ -4,11 +4,11 @@ This file gives a quick map of the repository without requiring a full project-b
 
 ## Core Documents
 
-- `README.md`: main public overview plus detailed project walkthroughs
-- `FLAGSHIP_PROJECTS.md`: standout flagship files in the repository
-- `RESUME_PROJECT_BULLETS.md`: resume-ready project descriptions
-- `portfolio.html`: polished portfolio landing page
-- `dashboard.html`: interactive results dashboard
+- [README.md](README.md): main public overview plus detailed project walkthroughs
+- [FLAGSHIP_PROJECTS.md](FLAGSHIP_PROJECTS.md): standout flagship files in the repository
+- [RESUME_PROJECT_BULLETS.md](RESUME_PROJECT_BULLETS.md): project bullet library
+- [Live portfolio](https://chetanoid.github.io/quant-trading-projects/portfolio.html): polished portfolio landing page
+- [Live dashboard](https://chetanoid.github.io/quant-trading-projects/dashboard.html): interactive results dashboard
 
 ## Market Microstructure And Execution
 

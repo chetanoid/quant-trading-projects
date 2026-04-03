@@ -3,7 +3,7 @@
 This file collects polished bullet options for the repository's strongest projects.
 
 ## 1. High-Frequency Limit Order Book
-File: `high_frequency_limit_order_book.cpp`
+File: [high_frequency_limit_order_book.cpp](high_frequency_limit_order_book.cpp)
 
 Bullet options:
 - Built a C++ limit-order-book and matching-engine simulation with concurrent bid/ask order producers, price-time-priority matching, and live inventory/cash tracking to model exchange-style market microstructure.
@@ -11,7 +11,7 @@ Bullet options:
 - Designed a systems-oriented trading-engine prototype to demonstrate low-level performance thinking, concurrent state management, and order-book mechanics relevant to electronic trading infrastructure.
 
 ## 2. Avellaneda-Stoikov Market Maker
-File: `avellaneda_stoikov_market_maker.py`
+File: [avellaneda_stoikov_market_maker.py](avellaneda_stoikov_market_maker.py)
 
 Bullet options:
 - Implemented an Avellaneda-Stoikov market-making simulator that adapts bid/ask quotes to inventory, volatility, time horizon, and order-arrival intensity, with P&L and inventory diagnostics.
@@ -19,7 +19,7 @@ Bullet options:
 - Built a market-making research prototype connecting closed-form microstructure theory to executable simulation code and visual diagnostics for quote, spread, inventory, and P&L behavior.
 
 ## 3. Kalman Filter Pairs Trading
-File: `kalman_pairs_trading.py`
+File: [kalman_pairs_trading.py](kalman_pairs_trading.py)
 
 Bullet options:
 - Developed a statistical-arbitrage strategy using a Kalman filter to estimate a time-varying hedge ratio, generate spread z-score signals, and backtest dynamic long/short trading rules.
@@ -27,7 +27,7 @@ Bullet options:
 - Implemented a market-neutral trading framework that updates hedge coefficients online and evaluates strategy behavior under both real-data and synthetic fallback regimes.
 
 ## 4. Rough Bergomi Volatility Model
-File: `rough_bergomi_model.py`
+File: [rough_bergomi_model.py](rough_bergomi_model.py)
 
 Bullet options:
 - Implemented a rough Bergomi stochastic-volatility simulator with fractional Gaussian noise generation and Monte Carlo option pricing to study non-Markovian volatility dynamics.
@@ -35,7 +35,7 @@ Bullet options:
 - Translated rough-volatility theory into executable numerical code, including path simulation, variance dynamics, and Monte Carlo pricing of European options.
 
 ## 5. Almgren-Chriss Optimal Execution
-File: `optimal_execution_almgren_chriss.py`
+File: [optimal_execution_almgren_chriss.py](optimal_execution_almgren_chriss.py)
 
 Bullet options:
 - Implemented an Almgren-Chriss execution model to derive optimal liquidation schedules under market-impact and risk-aversion assumptions, then simulated implementation shortfall across price paths.
@@ -43,7 +43,7 @@ Bullet options:
 - Built an execution-research prototype connecting closed-form schedule derivation to transaction-cost analysis and shortfall-distribution visualization.
 
 ## 6. Portfolio Optimization
-File: `portfolio_optimization.py`
+File: [portfolio_optimization.py](portfolio_optimization.py)
 
 Bullet options:
 - Built a portfolio-optimization workflow that samples thousands of portfolios, estimates annualized return/volatility, identifies Sharpe-optimal and minimum-volatility allocations, and visualizes the efficient frontier.
