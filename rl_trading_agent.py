@@ -2,7 +2,7 @@
 rl_trading_agent.py
 -------------------
 
-This script illustrates a simple reinforcement learning (Q‑learning)
+This script implements a reinforcement learning (Q-learning)
 approach to trading.  We simulate a price series (either by
 downloading a real asset with `yfinance` or generating a synthetic
 random walk) and define a discrete state space based on the asset’s
@@ -15,7 +15,7 @@ episodes, we evaluate the learned policy on the price series and
 produce an equity curve.  The resulting plot is saved to
 `rl_trading_equity.png`.
 
-This example is deliberately simplified to run without external
+The implementation is deliberately lightweight and runs without external
 libraries such as TensorFlow or PyTorch.  It serves to demonstrate
 your understanding of RL concepts (states, actions, rewards,
 exploration vs. exploitation, learning rate and discount factor) in a
@@ -155,7 +155,7 @@ def plot_equity(equity: np.ndarray) -> None:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Train a simple Q‑learning trading agent.')
+    parser = argparse.ArgumentParser(description='Train a Q-learning trading agent.')
     parser.add_argument('--ticker', type=str, default='SPY', help='Ticker symbol to download')
     parser.add_argument('--episodes', type=int, default=50, help='Number of training episodes')
     parser.add_argument('--window', type=int, default=5, help='Moving average window for state definition')
@@ -163,7 +163,7 @@ def main():
     prices = fetch_price_series(args.ticker)
     Q = q_learning(prices, episodes=args.episodes, window=args.window)
     equity = evaluate_policy(prices, Q, window=args.window)
-    # Print simple performance metrics
+    # Print core performance metrics
     total_return = (equity[-1] - equity[0]) / equity[0] if len(equity) > 1 else 0.0
     print(f'Final equity value: {equity[-1]:.2f}, Total return over evaluation: {total_return * 100:.2f}%')
     try:

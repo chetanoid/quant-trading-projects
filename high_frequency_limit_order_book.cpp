@@ -1,7 +1,7 @@
 /*
  * high_frequency_limit_order_book.cpp
  *
- * This example implements a basic limit‑order book (LOB) engine in C++.  The goal
+ * This program implements a compact limit-order book (LOB) engine in C++. The goal
  * is to demonstrate proficiency with lower‑level systems programming—manual
  * memory management, concurrency, and performance considerations—which are
  * essential skills at top trading firms.  The engine supports concurrent
@@ -16,8 +16,8 @@
  *   4. Real‑time P&L and inventory tracking for a market maker.
  *
  * Note: This program uses only the C++ standard library, avoiding
- * external dependencies.  It's written for clarity, not raw speed, but
- * demonstrates how a systems‑level trading engine might be structured.  To
+ * external dependencies. It prioritizes clarity and correctness while
+ * preserving the core structure of a systems-level trading engine. To
  * compile, run:  g++ -std=c++17 -O2 high_frequency_limit_order_book.cpp -o hflob
  */
 
@@ -33,7 +33,7 @@
 #include <thread>
 #include <vector>
 
-// Simple representation of a limit order.  For demonstration we only
+// Compact representation of a limit order. For this engine we only
 // consider limit orders (no market orders) and immediate fill/cancel logic.
 struct Order {
     int id;           // unique order identifier

@@ -2,7 +2,7 @@
 avellaneda_stoikov_market_maker.py
 ---------------------------------
 
-This script implements a simplified version of the Avellaneda–Stoikov
+This script implements the Avellaneda–Stoikov
 optimal market–making model.  The model sets dynamic bid and ask
 quotes based on a market maker’s inventory, risk aversion and the time
 remaining in a trading horizon.  The algorithm derives closed–form

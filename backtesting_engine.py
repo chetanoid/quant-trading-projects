@@ -2,7 +2,7 @@
 Backtesting Engine
 ===================
 
-This script implements a simple yet powerful backtesting engine for evaluating
+This script implements a modular backtesting engine for evaluating
 trading strategies on historical price data. It supports multiple strategies,
 computes common performance metrics and produces equity curve plots. The goal
 is to provide a modular framework that can be extended with custom
@@ -14,9 +14,9 @@ Features
   internet access is available. If ``yfinance`` is unavailable or network
   access fails, it falls back to an embedded sample price series derived
   from historical S&P 500 data for reproducibility.
-* Implements two example strategies: ``momentum_strategy`` and
+* Implements two reference strategies: ``momentum_strategy`` and
   ``mean_reversion_strategy``. Each strategy generates a series of trading
-  signals (1 for long, -1 for short, 0 for flat) based on simple technical
+  signals (1 for long, -1 for short, 0 for flat) based on transparent technical
   indicators.
 * Backtests strategies by computing daily portfolio returns, cumulative
   returns, annualised volatility and a Sharpe ratio. A max drawdown
@@ -28,13 +28,13 @@ Features
 Usage
 -----
 Run this script directly to execute the built‑in strategies on SPY daily
-prices over the last 5 years. The example uses a 20‑day lookback period for
+prices over the last 5 years. The default run uses a 20‑day lookback period for
 both momentum and mean reversion strategies. You may edit the ``main``
 function to test other tickers or periods or to add new strategies.
 
 This project demonstrates software engineering practices expected in
 quantitative roles: modular design, error handling, reproducibility and
-performance analysis. It can serve as a foundation for more sophisticated
+performance analysis. It serves as a foundation for more sophisticated
 backtesting engines (e.g. with transaction costs, multiple assets, or
 position sizing algorithms).
 """
@@ -127,7 +127,7 @@ def compute_returns(prices: pd.DataFrame) -> pd.DataFrame:
 
 
 def momentum_strategy(prices: pd.DataFrame, lookback: int = 20) -> pd.DataFrame:
-    """Generates trading signals based on a simple momentum rule.
+    """Generates trading signals based on a momentum rule.
 
     A long signal (1) is generated when the current price is above its
     ``lookback``‑day moving average; a short signal (-1) is generated when
@@ -153,7 +153,7 @@ def momentum_strategy(prices: pd.DataFrame, lookback: int = 20) -> pd.DataFrame:
 
 
 def mean_reversion_strategy(prices: pd.DataFrame, lookback: int = 20) -> pd.DataFrame:
-    """Generates trading signals based on a simple mean reversion rule.
+    """Generates trading signals based on a mean reversion rule.
 
     A long signal (1) is generated when the current price is below its
     ``lookback``‑day moving average by more than one standard deviation;
@@ -317,7 +317,7 @@ def run_backtest(
 
 
 def main() -> None:
-    """Example usage demonstrating two strategies on SPY over the last 5 years."""
+    """Default usage running two strategies on SPY over the last 5 years."""
     end_date = datetime.date.today()
     start_date = end_date - datetime.timedelta(days=5 * 365)
     tickers = ["SPY"]

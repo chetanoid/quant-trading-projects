@@ -2,8 +2,8 @@
 Cointegration Pairs Trading Strategy
 ------------------------------------
 
-This script implements a simple cointegration based pairs trading strategy using
-real historical price data. It demonstrates how to:
+This script implements a cointegration-based pairs trading strategy using
+real historical price data. It performs the following steps:
 
 * Download daily adjusted close prices for two equities using ``yfinance``.
 * Test whether the two price series are cointegrated using the
@@ -21,7 +21,7 @@ The script includes a fallback data generator to ensure it runs even if
 ``yfinance`` is unavailable or fails to download data (for example, when
 offline). The fallback generates two correlated random walk price series.
 
-Example usage:
+Usage:
 
     python3 cointegration_pairs_trading.py --symbols KO PEP --start 2020-01-01 --end 2024-01-01 --threshold 1.5
 
@@ -183,7 +183,7 @@ def backtest_pairs(
     threshold: float,
     initial_capital: float = 1.0,
 ) -> pd.DataFrame:
-    """Simulate a simple pairs trading strategy based on z-score signals.
+    """Simulate a pairs trading strategy based on z-score signals.
 
     The strategy invests an equal dollar amount in each leg when a signal is triggered.
     Positions are normalised so that the total notional equals 1 at entry. When the
