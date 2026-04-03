@@ -2,13 +2,13 @@
 Trading Strategies Research
 ==========================
 
-This script demonstrates the construction and backtesting of two simple algorithmic trading strategies
+This script demonstrates the construction and backtesting of two algorithmic trading strategies
 on synthetic time series data: a momentum strategy and a mean‑reversion strategy.  Because external
 data access is unavailable in this environment, we generate synthetic price data via a random walk
-with drift.  The script computes trades, cumulative returns, drawdowns, and a rudimentary Sharpe ratio
+with drift.  The script computes trades, cumulative returns, drawdowns, and a Sharpe-like ratio
 for each strategy and compares their performance to a long‑only buy‑and‑hold benchmark.
 
-The goal is to illustrate how to structure a basic backtesting loop, calculate common performance
+The goal is to illustrate how to structure a backtesting loop, calculate common performance
 metrics, and contrast the behaviours of trend‑following and mean‑reversion approaches.  The code
 is self‑contained and can be easily adapted to real market data when available.
 

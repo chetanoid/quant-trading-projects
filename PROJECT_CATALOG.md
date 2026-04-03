@@ -12,7 +12,7 @@ This file gives a quick map of the repository without requiring a full project-b
 
 ## Market Microstructure And Execution
 
-- `limit_order_book_simulator.py`: toy limit order book and inventory-aware quoting
+- `limit_order_book_simulator.py`: compact limit order book and inventory-aware quoting
 - `real_data_market_maker.py`: market-making simulation driven by real or fallback price data
 - `avellaneda_stoikov_market_maker.py`: classic inventory-aware market-making model
 - `optimal_execution_almgren_chriss.py`: optimal execution schedule and shortfall analysis
@@ -44,7 +44,7 @@ This file gives a quick map of the repository without requiring a full project-b
 
 ## Machine Learning And Presentation
 
-- `sentiment_analysis_market_prediction.py`: toy NLP trading-sentiment classifier
+- `sentiment_analysis_market_prediction.py`: synthetic-data NLP trading-sentiment classifier
 - `real_data_sentiment_analysis.py`: financial-news sentiment classification with fallback data
 - `rl_trading_agent.py`: reinforcement-learning style trading example
 - `interactive_dashboard.py`: consolidated dashboard of strategy and portfolio outputs

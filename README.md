@@ -210,7 +210,7 @@ This is a compact NLP example built on a small synthetic dataset of market-relat
 
 ### 22. Real-Data Sentiment Analysis (`real_data_sentiment_analysis.py`)
 
-This project trains classification models on a labeled financial-news dataset and reports detailed performance statistics. It is a stronger data and NLP pipeline than the toy sentiment example above.
+This project trains classification models on a labeled financial-news dataset and reports detailed performance statistics. It is a stronger data and NLP pipeline than the compact sentiment example above.
 
 - Inputs: labeled financial-news data, with embedded fallback dataset
 - Outputs: accuracy summary, classification reports, `logistic_confusion_matrix.png`, `random_forest_confusion_matrix.png`

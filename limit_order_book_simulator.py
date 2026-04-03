@@ -2,8 +2,8 @@
 Limit Order Book & Market Making Simulator
 =========================================
 
-This script implements a simple limit order book and a market‑making strategy for educational purposes.
-It simulates an order book over a fixed number of timesteps, uses a very basic market maker
+This script implements a compact limit order book and a market‑making simulation.
+It simulates an order book over a fixed number of timesteps, uses an inventory-aware market maker
 to quote bid/ask prices around a reference price, handles market orders from other traders,
 matches orders, and calculates a P&L for the market maker.  The goal is to demonstrate
 key concepts in market microstructure rather than to serve as production‑ready code.
@@ -14,7 +14,7 @@ Key features:
   * Synthetic price process for the underlying asset.
   * Calculation of P&L, inventory and trade count for the market maker.
 
-The code is heavily commented to help the reader follow along.  Feel free to experiment
+The code is heavily commented to help the reader follow along.  You can experiment
 with the parameters (number of timesteps, volatility, order size, etc.) to see how the
 strategy behaves under different conditions.
 

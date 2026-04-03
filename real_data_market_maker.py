@@ -2,7 +2,7 @@
 Real‑Data Market Making Simulator
 ================================
 
-This script implements a simple limit order book and market‑making strategy
+This script implements a compact limit order book and market‑making strategy
 using a series of *real* mid‑prices drawn from actual financial markets.
 It attempts to fetch recent daily prices for the SPY ETF from Yahoo! Finance
 via the ``yfinance`` package.  If the network or library is unavailable,
@@ -16,7 +16,7 @@ Key components:
 * **Price ingestion**: ``get_price_series`` tries to download SPY prices
   with ``yfinance`` and returns a list of floats.  On failure it falls
   back to ``SAMPLE_PRICES`` defined below.
-* **Order book and matching engine**: identical to the toy engine in
+* **Order book and matching engine**: aligned with the engine in
   ``limit_order_book_simulator.py``.  Orders are stored in heaps for
   efficient best bid/ask retrieval.
 * **Market maker**: quotes around each mid price and manages inventory.
@@ -25,7 +25,7 @@ Key components:
 
 Run this script directly (``python3 real_data_market_maker.py``) to
 execute the simulation.  It will print final P&L and basic summary
-statistics.  Feel free to modify the sample price series or the market
+statistics.  You can modify the sample price series or the market
 maker parameters to explore different behaviours.
 
 """

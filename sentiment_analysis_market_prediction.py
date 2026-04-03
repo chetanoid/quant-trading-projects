@@ -2,12 +2,12 @@
 Sentiment Analysis & Market Direction Prediction
 ==============================================
 
-This script demonstrates a simple natural language processing (NLP) pipeline for sentiment
+This script demonstrates a natural language processing (NLP) pipeline for sentiment
 analysis and prediction of market moves.  A small synthetic dataset of news headlines and
 social media posts is created with sentiment labels (positive or negative).  The text is
 vectorised with TF‑IDF and used to train two classifiers: logistic regression and
 random forest.  The models' accuracies are printed, and predictions on a few sample
-unseen texts are shown.  The aim is to illustrate a basic workflow for transforming
+unseen texts are shown.  The aim is to illustrate a complete workflow for transforming
 text into features and fitting classification models, not to build a production‑grade
 trading signal.
 
@@ -25,7 +25,7 @@ from sklearn.metrics import accuracy_score
 
 
 def create_dataset() -> Tuple[List[str], List[int]]:
-    """Create a toy dataset of market‑related sentences with sentiment labels."""
+    """Create a small synthetic dataset of market‑related sentences with sentiment labels."""
     texts = [
         "Company X reports record profits and beats analyst expectations",
         "Shares of Company Y plunge after weak earnings report",
