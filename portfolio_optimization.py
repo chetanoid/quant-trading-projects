@@ -43,9 +43,9 @@ try:
 except Exception:
     _HAVE_MATPLOTLIB = False
 
-# Fallback synthetic price data (10 days of prices for three assets).  While
+# Fallback synthetic price data (10 days of prices for three assets). While
 # these values are fictional, they provide a deterministic example if
-# live market data cannot be fetched.  Feel free to replace with more
+# live market data cannot be fetched. They can be replaced with more
 # realistic fallback data if available.
 FALLBACK_DATA = {
     "AssetA": [10.0, 10.1, 9.9, 10.2, 10.3, 10.4, 10.1, 10.2, 10.5, 10.6],

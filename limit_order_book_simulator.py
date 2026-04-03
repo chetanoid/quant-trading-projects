@@ -49,7 +49,7 @@ class Order:
 
 
 class OrderBook:
-    """A simple limit order book supporting bid/ask matching."""
+    """A compact limit order book supporting bid/ask matching."""
 
     def __init__(self):
         # Use heaps to represent the best bid and best ask queues

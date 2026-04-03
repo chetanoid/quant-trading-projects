@@ -27,7 +27,7 @@ Best fit:
 ## 2. `avellaneda_stoikov_market_maker.py`
 
 Why it stands out:
-- Uses a canonical market-making model rather than a toy strategy heuristic
+- Uses a canonical market-making model rather than a simplified heuristic
 - Connects inventory risk, quote placement, volatility, and order-arrival intensity
 - Demonstrates both mathematical understanding and trading intuition
 
