@@ -2,28 +2,20 @@
 Interactive Quantitative Trading Dashboard
 ========================================
 
-This script creates an interactive dashboard summarising key metrics from
-several of the quantitative trading projects in this repository.  It
-demonstrates an ability to synthesise results across multiple models and
-presents them in a visually engaging format that is easy to explore.
+This script creates an interactive dashboard summarizing key outputs from
+the quantitative trading projects in this repository. It uses Plotly to
+generate a single HTML file (`dashboard.html`) with four review sections:
 
-The dashboard is implemented using Plotly, which is installed in this
-environment.  It generates a single HTML file (`dashboard.html`) containing
-two interactive plots:
+1. Cumulative strategy returns loaded from `strategy_real_returns.csv` or
+   `strategy_returns.csv`.
+2. An efficient frontier built from synthetic asset prices and random
+   portfolio weights.
+3. A correlation heatmap for the synthetic asset return series.
+4. A strategy performance metrics table with annualized return,
+   annualized volatility, Sharpe ratio, and maximum drawdown.
 
-1. **Cumulative returns** for three simple strategies (buy‐and‐hold,
-   momentum and mean‐reversion) computed from the `strategy_returns.csv`
-   file produced by the `real_data_strategy_backtest.py` script.  The
-   cumulative returns are calculated by compounding the daily returns.
-
-2. **Efficient frontier** constructed from synthetic asset data.  The
-   portfolio optimisation uses a Monte Carlo approach to generate random
-   weight allocations across a set of five assets, then computes the
-   annualised return, volatility and Sharpe ratio for each portfolio.  The
-   script identifies and highlights the portfolios with the maximum
-   Sharpe ratio and the minimum volatility.  Generating the asset data
-   internally (instead of downloading live prices) ensures the dashboard
-   can run without external dependencies.
+Generating the portfolio data internally keeps the dashboard reproducible
+when live market data is unavailable.
 
 To run this script and generate the dashboard, execute:
 
@@ -32,11 +24,11 @@ python interactive_dashboard.py
 ```
 
 The resulting `dashboard.html` file will appear in the current
-directory.  Open it with a web browser to explore the charts.
+directory. Open it with a web browser to explore the charts.
 
-Note: if `strategy_returns.csv` is not present, the cumulative return
-chart will still display, but all series will be flat at zero.  This
-fallback ensures the dashboard does not crash if the CSV is missing.
+Note: if no strategy return CSV is present, the cumulative return chart
+still displays with flat placeholder series. This fallback keeps the
+dashboard generation path reliable in a fresh clone.
 """
 
 import os
@@ -113,7 +105,8 @@ def load_strategy_returns(base_dir: str) -> tuple[pd.DataFrame, str | None]:
             return _normalise_strategy_returns(pd.read_csv(candidate)), candidate
     return _build_placeholder_returns(), None
 
-def generate_synthetic_prices(n_assets: int = 5, n_days: int = 252*2) -> pd.DataFrame:
+
+def generate_synthetic_prices(n_assets: int = 5, n_days: int = 252 * 2) -> pd.DataFrame:
     """Generate synthetic asset price data using geometric Brownian motion.
 
     Parameters
@@ -149,6 +142,7 @@ def generate_synthetic_prices(n_assets: int = 5, n_days: int = 252*2) -> pd.Data
     columns = [f'Asset_{i + 1}' for i in range(n_assets)]
     return pd.DataFrame(prices, columns=columns)
 
+
 def monte_carlo_portfolios(prices: pd.DataFrame, num_portfolios: int = 5000):
     """Generate random portfolios and compute return, volatility and Sharpe ratio.
 
@@ -166,7 +160,7 @@ def monte_carlo_portfolios(prices: pd.DataFrame, num_portfolios: int = 5000):
         one column per asset representing the weight allocation.
     """
     returns = prices.pct_change().dropna()
-    mean_returns = returns.mean() * 252  # Annualised
+    mean_returns = returns.mean() * 252  # Annualized
     cov_matrix = returns.cov() * 252
     n_assets = len(mean_returns)
     results = []
@@ -179,14 +173,16 @@ def monte_carlo_portfolios(prices: pd.DataFrame, num_portfolios: int = 5000):
     columns = ['return', 'volatility', 'sharpe'] + list(prices.columns)
     return pd.DataFrame(results, columns=columns)
 
+
 def build_dashboard():
     """Assemble and save the interactive dashboard.
 
     This function loads strategy returns, generates synthetic asset prices,
-    computes random portfolios and constructs a three‑panel interactive
-    dashboard.  The panels display cumulative returns, the efficient
-    frontier and an asset correlation heatmap.  The final dashboard is
-    written to `dashboard.html` in the current directory.
+    computes random portfolios and constructs a four-section interactive
+    dashboard. The sections display cumulative returns, the efficient
+    frontier, an asset correlation heatmap, and a strategy metrics table.
+    The final dashboard is written to `dashboard.html` in the current
+    directory.
     """
     base_dir = os.path.dirname(__file__)
     strat_df, source_file = load_strategy_returns(base_dir)
@@ -202,9 +198,8 @@ def build_dashboard():
     returns_matrix = prices.pct_change().dropna()
     corr = returns_matrix.corr()
 
-    # Compute summary metrics for each strategy
-    # We calculate annualised return, annualised volatility, Sharpe ratio (risk‑free rate = 0)
-    # and maximum drawdown for buy‑and‑hold, momentum and mean reversion strategies.
+    # Compute summary metrics for each strategy.
+    # Risk-free rate is treated as zero for the Sharpe ratio display.
     metrics = {}
     # Map internal column names to user friendly labels
     strategy_map = {
@@ -244,7 +239,7 @@ def build_dashboard():
         [round(metrics[s]['Max Drawdown'], 4) for s in order]
     ]
 
-    # Create a four‑row subplot: returns, efficient frontier, correlation heatmap, metrics table
+    # Create a four-row subplot: returns, frontier, heatmap, and metrics.
     fig = make_subplots(rows=4, cols=1, subplot_titles=(
         'Cumulative Returns of Strategies',
         'Efficient Frontier (Synthetic Data)',
@@ -334,6 +329,7 @@ def build_dashboard():
     output_path = os.path.join(base_dir, 'dashboard.html')
     fig.write_html(output_path, include_plotlyjs='cdn')
     print(f"Dashboard saved to {output_path}")
+
 
 if __name__ == '__main__':
     build_dashboard()
