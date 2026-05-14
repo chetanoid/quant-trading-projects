@@ -16,6 +16,7 @@ This portfolio contains 24 quantitative trading and finance projects spanning ma
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
+python avellaneda_stoikov_market_maker.py
 python interactive_dashboard.py
 ```
 
@@ -34,7 +35,7 @@ Most scripts run directly with `python <script_name>.py`. Many projects try live
 
 ### 1. Limit Order Book And Market Making Simulator (`limit_order_book_simulator.py`)
 
-This script demonstrates a basic event-driven limit order book with a simple inventory-aware market maker. It is a good first file for understanding the repo's market microstructure layer because it keeps the mechanics readable.
+This script demonstrates a compact event-driven limit order book with an inventory-aware market maker. It is a good first file for understanding the repo's market microstructure layer because it keeps the mechanics readable.
 
 - Inputs: synthetic mid-price evolution, random market-order arrivals, spread, lot size, and inventory parameters
 - Outputs: console summary plus `limit_order_book_results.txt`
@@ -48,7 +49,7 @@ This simulation uses real or fallback market prices to drive a market-making str
 - Outputs: console performance summary, `market_maker_pnl.png`, `market_maker_inventory.png`
 - Run: `python real_data_market_maker.py`
 
-### 3. Avellaneda-Stoikov Market-Making Model (`avellaneda_stoikov_market_maker.py`)
+### 3. Avellaneda-Stoikov Market Maker (`avellaneda_stoikov_market_maker.py`)
 
 This project implements the classic inventory-aware market-making framework where quotes adapt to volatility, time horizon, and current inventory. It is one of the strongest trading-model files in the repository because it connects mathematical structure directly to trading behavior.
 
@@ -76,7 +77,7 @@ This C++ project is a compact matching engine built around order-book state, pri
 
 ### 6. Trading Strategies Research (`trading_strategies_research.py`)
 
-This script backtests momentum and mean-reversion strategies on synthetic price series. It provides a clean baseline for comparing simple trading rules and writes strategy returns for later visualization.
+This script backtests momentum and mean-reversion strategies on synthetic price series. It provides a clean baseline for comparing interpretable trading rules and writes strategy returns for later visualization.
 
 - Inputs: synthetic geometric-Brownian-motion style prices
 - Outputs: console summary and `strategy_returns.csv`
@@ -84,7 +85,7 @@ This script backtests momentum and mean-reversion strategies on synthetic price 
 
 ### 7. Real-Data Trading Strategy Backtester (`real_data_strategy_backtest.py`)
 
-This project evaluates simple momentum and mean-reversion rules on SPY data with an embedded fallback path. It computes cumulative return, volatility, and Sharpe-like metrics and saves the strategy return series for downstream use.
+This project evaluates momentum and mean-reversion rules on SPY data with an embedded fallback path. It computes cumulative return, volatility, and Sharpe-like metrics and saves the strategy return series for downstream use.
 
 - Inputs: SPY history from `yfinance` or embedded fallback data
 - Outputs: console performance summary, `strategy_real_returns.csv`, `strategy_cumulative_returns.png`
@@ -100,7 +101,7 @@ This strategy implements a classical statistical-arbitrage workflow based on coi
 
 ### 9. Kalman Filter Pairs Trading (`kalman_pairs_trading.py`)
 
-This version of pairs trading upgrades the static hedge ratio to a time-varying one estimated through a Kalman filter. It is stronger than a basic stat-arb demo because it handles changing relationships more realistically.
+This version of pairs trading upgrades the static hedge ratio to a time-varying one estimated through a Kalman filter. It is stronger than a static stat-arb workflow because it handles changing relationships more realistically.
 
 - Inputs: two tickers, date window, entry threshold, exit threshold
 - Outputs: console performance summary and `kalman_pairs_trading_results.png`
@@ -148,7 +149,7 @@ This project simulates joint price and variance dynamics under a Heston-style mo
 - Outputs: console option estimate, `heston_asset_paths.png`, `heston_variance_paths.png`
 - Run: `python heston_stochastic_vol.py`
 
-### 15. Rough Bergomi Stochastic Volatility Model (`rough_bergomi_model.py`)
+### 15. Rough Bergomi Volatility Model (`rough_bergomi_model.py`)
 
 This is one of the most mathematically advanced files in the repository. It uses rough-volatility ideas, fractional-process simulation, and Monte Carlo pricing to showcase deeper quantitative modeling.
 
@@ -202,7 +203,7 @@ This risk-management project computes parametric and historical VaR and CVaR for
 
 ### 21. Sentiment Analysis And Market Direction Prediction (`sentiment_analysis_market_prediction.py`)
 
-This is a compact NLP example built on a small synthetic dataset of market-related text. It demonstrates text vectorization, classification, and prediction on unseen examples in a lightweight setting.
+This is a compact NLP example built on a contained synthetic dataset of market-related text. It demonstrates text vectorization, classification, and prediction on unseen examples in a lightweight setting.
 
 - Inputs: synthetic headlines and social posts
 - Outputs: console model accuracy and sample predictions
@@ -218,7 +219,7 @@ This project trains classification models on a labeled financial-news dataset an
 
 ### 23. Reinforcement Learning Trading Agent (`rl_trading_agent.py`)
 
-This file implements a simple Q-learning style trading agent that interacts with a price environment. It is useful for showing sequential decision-making, state design, and policy-learning ideas in trading.
+This file implements a compact Q-learning style trading agent that interacts with a price environment. It is useful for showing sequential decision-making, state design, and policy-learning ideas in trading.
 
 - Inputs: price series, episode count, exploration schedule, learning parameters
 - Outputs: console training summary and `rl_trading_equity.png`

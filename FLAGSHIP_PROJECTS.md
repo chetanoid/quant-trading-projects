@@ -6,7 +6,7 @@ The selection favors work that shows mathematical rigor, trading intuition, stat
 
 ## Recommended Top 6
 
-## 1. `high_frequency_limit_order_book.cpp`
+### 1. `high_frequency_limit_order_book.cpp`
 
 Why it stands out:
 - Shows systems-level thinking instead of only research notebooks
@@ -24,7 +24,7 @@ Best fit:
 - Trading systems
 - Research engineering
 
-## 2. `avellaneda_stoikov_market_maker.py`
+### 2. `avellaneda_stoikov_market_maker.py`
 
 Why it stands out:
 - Uses a canonical market-making model rather than a simplified heuristic
@@ -42,10 +42,10 @@ Best fit:
 - Quant researcher
 - Electronic market making
 
-## 3. `kalman_pairs_trading.py`
+### 3. `kalman_pairs_trading.py`
 
 Why it stands out:
-- Stronger than a basic cointegration demo because the hedge ratio updates dynamically
+- Stronger than a static cointegration workflow because the hedge ratio updates dynamically
 - Combines state-space modeling, signal construction, and backtesting
 - Looks like real research work rather than a static classroom example
 
@@ -60,10 +60,10 @@ Best fit:
 - Statistical arbitrage
 - Trader-researcher hybrid roles
 
-## 4. `rough_bergomi_model.py`
+### 4. `rough_bergomi_model.py`
 
 Why it stands out:
-- Materially more advanced than standard Black-Scholes or a basic Monte Carlo pricer
+- Materially more advanced than standard Black-Scholes or a baseline Monte Carlo pricer
 - Signals comfort with stochastic calculus, fractional processes, and numerical methods
 - Uncommon enough to make strong reviewers stop and read
 
@@ -78,7 +78,7 @@ Best fit:
 - Quantitative modeling
 - Volatility and options roles
 
-## 5. `optimal_execution_almgren_chriss.py`
+### 5. `optimal_execution_almgren_chriss.py`
 
 Why it stands out:
 - Shows execution thinking, not just alpha generation
@@ -96,7 +96,7 @@ Best fit:
 - Execution research
 - Market microstructure roles
 
-## 6. `portfolio_optimization.py`
+### 6. `portfolio_optimization.py`
 
 Why it stands out:
 - Clear example of turning return and covariance estimates into portfolio decisions

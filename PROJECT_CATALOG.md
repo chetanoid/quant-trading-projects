@@ -1,6 +1,6 @@
 # Project Catalog
 
-This file gives a quick map of the repository without requiring a full project-by-project read.
+This file gives a quick map of the repository's 24 project files without requiring a full project-by-project read.
 
 ## Core Documents
 
@@ -14,7 +14,7 @@ This file gives a quick map of the repository without requiring a full project-b
 
 - `limit_order_book_simulator.py`: compact limit order book and inventory-aware quoting
 - `real_data_market_maker.py`: market-making simulation driven by real or fallback price data
-- `avellaneda_stoikov_market_maker.py`: classic inventory-aware market-making model
+- `avellaneda_stoikov_market_maker.py`: Avellaneda-Stoikov inventory-aware market-making model
 - `optimal_execution_almgren_chriss.py`: optimal execution schedule and shortfall analysis
 - `high_frequency_limit_order_book.cpp`: compact C++ matching engine example
 
@@ -32,7 +32,7 @@ This file gives a quick map of the repository without requiring a full project-b
 - `option_greeks_calculator.py`: Black-Scholes pricing and Greeks
 - `implied_vol_surface.py`: surface generation and implied-vol inversion
 - `heston_stochastic_vol.py`: stochastic-volatility simulation and pricing
-- `rough_bergomi_model.py`: rough-volatility style simulation
+- `rough_bergomi_model.py`: rough Bergomi volatility simulation
 - `garch_volatility_model.py`: volatility estimation and risk forecasting
 
 ## Portfolio Construction And Risk
