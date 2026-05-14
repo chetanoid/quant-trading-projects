@@ -2,7 +2,8 @@
 
 This file highlights six of the strongest projects in the repository.
 
-The selection favors work that shows mathematical rigor, trading intuition, statistical modeling, systems awareness, and clean implementation.
+The selection favors work that shows mathematical rigor, trading intuition, statistical
+modeling, systems awareness, and clean implementation.
 
 ## Recommended Top 6
 
@@ -117,9 +118,12 @@ Best fit:
 ## Honorable Mentions
 
 - `cointegration_pairs_trading.py`: good backup if you want a more classical stat-arb example
-- `value_at_risk_simulation.py`: useful supporting risk project, but less differentiated than the top 6
-- `real_data_sentiment_analysis.py`: reasonable ML and NLP side project, but weaker as a flagship than the core quant and microstructure work
-- `backtesting_engine.py`: good infrastructure signal, especially if you strengthen the framework angle further
+- `value_at_risk_simulation.py`: useful supporting risk project, but less differentiated than
+  the top 6
+- `real_data_sentiment_analysis.py`: reasonable ML and NLP side project, but weaker as a
+  flagship than the core quant and microstructure work
+- `backtesting_engine.py`: good infrastructure signal, especially if you strengthen the
+  framework angle further
 
 ## Best 4 If You Need A Shortlist
 

@@ -240,57 +240,95 @@ def build_dashboard():
     ]
 
     # Create a four-row subplot: returns, frontier, heatmap, and metrics.
-    fig = make_subplots(rows=4, cols=1, subplot_titles=(
-        'Cumulative Returns of Strategies',
-        'Efficient Frontier (Synthetic Data)',
-        'Asset Return Correlation Heatmap',
-        'Strategy Performance Summary'
-    ), vertical_spacing=0.20, specs=[[{}], [{}], [{}], [{'type': 'table'}]])
+    fig = make_subplots(
+        rows=4,
+        cols=1,
+        subplot_titles=(
+            'Cumulative Returns of Strategies',
+            'Efficient Frontier (Synthetic Data)',
+            'Asset Return Correlation Heatmap',
+            'Strategy Performance Summary',
+        ),
+        vertical_spacing=0.20,
+        specs=[[{}], [{}], [{}], [{'type': 'table'}]],
+    )
 
     # Plot cumulative returns
-    fig.add_trace(go.Scatter(x=strat_df['plot_index'],
-                             y=strat_df['cum_bh'],
-                             name='Buy and Hold',
-                             mode='lines'),
-                  row=1, col=1)
-    fig.add_trace(go.Scatter(x=strat_df['plot_index'],
-                             y=strat_df['cum_momentum'],
-                             name='Momentum Strategy',
-                             mode='lines'),
-                  row=1, col=1)
-    fig.add_trace(go.Scatter(x=strat_df['plot_index'],
-                             y=strat_df['cum_mean_rev'],
-                             name='Mean Reversion Strategy',
-                             mode='lines'),
-                  row=1, col=1)
+    fig.add_trace(
+        go.Scatter(
+            x=strat_df['plot_index'],
+            y=strat_df['cum_bh'],
+            name='Buy and Hold',
+            mode='lines',
+        ),
+        row=1,
+        col=1,
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=strat_df['plot_index'],
+            y=strat_df['cum_momentum'],
+            name='Momentum Strategy',
+            mode='lines',
+        ),
+        row=1,
+        col=1,
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=strat_df['plot_index'],
+            y=strat_df['cum_mean_rev'],
+            name='Mean Reversion Strategy',
+            mode='lines',
+        ),
+        row=1,
+        col=1,
+    )
     fig.update_yaxes(title_text='Cumulative Return', row=1, col=1)
     fig.update_xaxes(title_text='Observation', row=1, col=1)
 
     # Plot efficient frontier scatter
-    fig.add_trace(go.Scatter(
-        x=portfolios['volatility'],
-        y=portfolios['return'],
-        mode='markers',
-        marker=dict(color=portfolios['sharpe'], colorscale='Viridis', colorbar=dict(title='Sharpe'),
-                    size=4, opacity=0.7),
-        name='Portfolios'
-    ), row=2, col=1)
+    fig.add_trace(
+        go.Scatter(
+            x=portfolios['volatility'],
+            y=portfolios['return'],
+            mode='markers',
+            marker=dict(
+                color=portfolios['sharpe'],
+                colorscale='Viridis',
+                colorbar=dict(title='Sharpe'),
+                size=4,
+                opacity=0.7,
+            ),
+            name='Portfolios',
+        ),
+        row=2,
+        col=1,
+    )
     # Highlight maximum Sharpe ratio
-    fig.add_trace(go.Scatter(
-        x=[max_sharpe['volatility']],
-        y=[max_sharpe['return']],
-        mode='markers',
-        marker=dict(color='red', size=10, symbol='star'),
-        name='Max Sharpe'
-    ), row=2, col=1)
+    fig.add_trace(
+        go.Scatter(
+            x=[max_sharpe['volatility']],
+            y=[max_sharpe['return']],
+            mode='markers',
+            marker=dict(color='red', size=10, symbol='star'),
+            name='Max Sharpe',
+        ),
+        row=2,
+        col=1,
+    )
     # Highlight minimum volatility
-    fig.add_trace(go.Scatter(
-        x=[min_vol['volatility']],
-        y=[min_vol['return']],
-        mode='markers',
-        marker=dict(color='blue', size=10, symbol='star'),
-        name='Min Volatility'
-    ), row=2, col=1)
+    fig.add_trace(
+        go.Scatter(
+            x=[min_vol['volatility']],
+            y=[min_vol['return']],
+            mode='markers',
+            marker=dict(color='blue', size=10, symbol='star'),
+            name='Min Volatility',
+        ),
+        row=2,
+        col=1,
+    )
     fig.update_xaxes(title_text='Volatility (σ)', row=2, col=1)
     fig.update_yaxes(title_text='Return (μ)', row=2, col=1)
 
@@ -302,8 +340,10 @@ def build_dashboard():
             y=corr.index,
             colorscale='RdBu',
             zmin=-1, zmax=1,
-            colorbar=dict(title='Correlation')
-        ), row=3, col=1
+            colorbar=dict(title='Correlation'),
+        ),
+        row=3,
+        col=1,
     )
     fig.update_xaxes(tickangle=45, row=3, col=1)
     fig.update_yaxes(autorange='reversed', row=3, col=1)
@@ -312,8 +352,10 @@ def build_dashboard():
     fig.add_trace(
         go.Table(
             header=dict(values=table_header, fill_color='lightgrey', align='center'),
-            cells=dict(values=table_values, align='center')
-        ), row=4, col=1
+            cells=dict(values=table_values, align='center'),
+        ),
+        row=4,
+        col=1,
     )
 
     title_text = 'Interactive Quantitative Trading Dashboard'
@@ -322,9 +364,12 @@ def build_dashboard():
     else:
         title_text += "<br><sup>No strategy CSV found; using placeholder data.</sup>"
 
-    fig.update_layout(height=1500, width=1000,
-                      title_text=title_text,
-                      showlegend=True)
+    fig.update_layout(
+        height=1500,
+        width=1000,
+        title_text=title_text,
+        showlegend=True,
+    )
     # Write the HTML file
     output_path = os.path.join(base_dir, 'dashboard.html')
     fig.write_html(output_path, include_plotlyjs='cdn')

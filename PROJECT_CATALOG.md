@@ -1,14 +1,17 @@
 # Project Catalog
 
-This file gives a quick map of the repository's 24 project files without requiring a full project-by-project read.
+This file gives a quick map of the repository's 24 project files without requiring a full
+project-by-project read.
 
 ## Core Documents
 
 - [README.md](README.md): main public overview plus detailed project walkthroughs
 - [FLAGSHIP_PROJECTS.md](FLAGSHIP_PROJECTS.md): standout flagship files in the repository
 - [RESUME_PROJECT_BULLETS.md](RESUME_PROJECT_BULLETS.md): project bullet library
-- [Live portfolio](https://chetanoid.github.io/quant-trading-projects/portfolio.html): polished portfolio landing page
-- [Live dashboard](https://chetanoid.github.io/quant-trading-projects/dashboard.html): interactive results dashboard
+- [Live portfolio](https://chetanoid.github.io/quant-trading-projects/portfolio.html): polished
+  portfolio landing page
+- [Live dashboard](https://chetanoid.github.io/quant-trading-projects/dashboard.html):
+  interactive results dashboard
 
 ## Market Microstructure And Execution
 
